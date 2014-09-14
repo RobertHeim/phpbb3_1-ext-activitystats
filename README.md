@@ -8,12 +8,13 @@ This extension is the 3.1.x version of the [3.0.x Activity Stats MOD](https://ww
 ## Installation
 
 ### 1. clone
-1. clone the repository into the folder phpBB3/ext/robertheim/activitystats:
+Clone the repository into the folder phpBB3/ext/robertheim/activitystats:
 
-
-    cd phpBB3
-    git clone https://github.com/RobertHeim/phpbb3_1-ext-activitystats.git ext/robertheim/activitystats/
+```
+cd phpBB3
+git clone https://github.com/RobertHeim/phpbb3_1-ext-activitystats.git ext/robertheim/activitystats/
+```
 
 ### 2. activate
-Go to admin panel -> customize -> extensions -> install Activity Stats
+Go to admin panel -> tab customise -> Manage extensions -> enable Activity Stats
 
