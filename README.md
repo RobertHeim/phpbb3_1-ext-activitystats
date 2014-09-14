@@ -8,7 +8,7 @@ This extension is the 3.1.x version of the [3.0.x Activity Stats MOD](https://ww
 ## Installation
 
 ### 1. clone
-Clone the repository into the folder phpBB3/ext/robertheim/activitystats:
+Clone (or download an move) the repository into the folder phpBB3/ext/robertheim/activitystats:
 
 ```
 cd phpBB3
