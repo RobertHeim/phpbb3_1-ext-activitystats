@@ -1,0 +1,10 @@
+services:
+    robertheim.activitystats.listener:
+        class: robertheim\activitystats\event\main_listener
+        arguments:
+            - @template
+            - @cache
+            - @user
+            - @dbal.conn
+        tags:
+            - { name: event.listener }
