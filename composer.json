@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "List of all registered users who have visited the board in the last 24 hours and stats on the number of new posts, new topics and new users within the last 24 hours on the index.",
 	"homepage": "https://github.com/RobertHeim/phpbb3_1-ext-activitystats",
-	"version": "0.1.0 RC",
+	"version": "1.0.0-RC1",
 	"time": "2014-09-14",
 	"keywords": ["phpbb", "extension", "activity stats", "statistics"],
 	"license": "GPL-2.0",
