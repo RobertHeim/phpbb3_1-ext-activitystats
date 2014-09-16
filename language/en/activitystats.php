@@ -22,7 +22,7 @@ $lang = array_merge($lang, array(
 	'TWENTYFOURHOUR_TOPICS'	=> 'New Topics <strong>%d</strong>',
 	'TWENTYFOURHOUR_POSTS'	=> 'New Posts <strong>%d</strong>',
 	'TWENTYFOURHOUR_USERS'	=> 'New users <strong>%d</strong>',
-	'USERS_24HOUR_TOTAL'	=> '%d Users active over the last 24 hours',
+	'USERS_24HOUR_TOTAL'	=> '%d Users and %d guests were active over the last 24 hours',
 ));
 ?>
 

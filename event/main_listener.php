@@ -80,10 +80,10 @@ class main_listener implements EventSubscriberInterface
 	
 		// assign the stats to the template.
 		$this->template->assign_vars(array(
-			'USERS_24HOUR_TOTAL'	=> sprintf($this->user->lang['USERS_24HOUR_TOTAL'], sizeof($active_users)),
-			'TWENTYFOURHOUR_TOPICS'			=> sprintf($this->user->lang['TWENTYFOURHOUR_TOPICS'], $activity['topics']),
-			'TWENTYFOURHOUR_POSTS'			=> sprintf($this->user->lang['TWENTYFOURHOUR_POSTS'], $activity['posts']),
-			'TWENTYFOURHOUR_USERS'			=> sprintf($this->user->lang['TWENTYFOURHOUR_USERS'], $activity['users']),
+			'USERS_24HOUR_TOTAL'			=> $this->user->lang('USERS_24HOUR_TOTAL', sizeof($active_users), $activity['guests']),
+			'TWENTYFOURHOUR_TOPICS'			=> $this->user->lang('TWENTYFOURHOUR_TOPICS', $activity['topics']),
+			'TWENTYFOURHOUR_POSTS'			=> $this->user->lang('TWENTYFOURHOUR_POSTS', $activity['posts']),
+			'TWENTYFOURHOUR_USERS'			=> $this->user->lang('TWENTYFOURHOUR_USERS', $activity['users']),
 		));
 	}
 
@@ -168,7 +168,16 @@ class main_listener implements EventSubscriberInterface
 			$result = $this->db->sql_query($sql);
 			$activity['users'] = $this->db->sql_fetchfield('new_users');
 			$this->db->sql_freeresult($result);
-	
+			
+			// total guests in the last 24 hours
+			$sql = 'SELECT COUNT(DISTINCT session_ip) AS num_guests
+				FROM ' . SESSIONS_TABLE . '
+				WHERE session_user_id = ' . ANONYMOUS . '
+				AND session_time >= ' . $interval;                
+			$result = $this->db->sql_query($sql);
+			$activity['guests'] = $this->db->sql_fetchfield('num_guests');
+			$this->db->sql_freeresult($result); 
+
 			// cache this data for 1 hour, this improves performance
 			$this->cache->put('_activity_mod', $activity, 3600);
 		}
