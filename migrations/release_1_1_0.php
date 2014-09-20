@@ -11,7 +11,7 @@ namespace robertheim\activitystats\migrations;
 
 class release_1_1_0 extends \phpbb\db\migration\migration
 {
-	protected $version = "1.1.0-DEV";
+	protected $version = "1.1.1-DEV";
 
 	protected $config_prefix = "robertheim_activitystats";
 
