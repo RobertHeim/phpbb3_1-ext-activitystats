@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_INSTALLED'				=> 'Installed Version: v%s',
 
-	'ACTIVITY_STATS_TITLE'					=> 'Who was here?',
+	'ACTIVITY_STATS_TITLE'					=> 'Activity Stats',
 	'ACTIVITY_STATS_DISP_SET'				=> 'Display settings',
 
 	// acp form
@@ -68,7 +68,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_RECORD_EXP'				=> 'Display and save record',
 	'ACTIVITY_STATS_RECORD_TIMESTAMP'		=> 'Dateformat for the record',
 	'ACTIVITY_STATS_RESET'					=> 'Reset record',
-	'ACTIVITY_STATS_RESET_EXP'				=> 'Resets the time and counter of the who-was-here record.',
+	'ACTIVITY_STATS_RESET_EXP'				=> 'Resets the time and counter of the Activity Stats record.',
 	'ACTIVITY_STATS_RESET_TRUE'				=> 'If you submit this form,\nthe record will be reseted.',
 
 
