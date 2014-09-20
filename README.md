@@ -1,9 +1,27 @@
 phpbb31-ext-activitystats
 =========================
 
-phpBB 3.1 extension that lists all registered users who have visited the board in the last 24 hours and stats on the number of new posts, new topics and new users within the last 24 hours on the index.
+phpBB 3.1 extension that displays statistics of the latest activities on the boards index site.
 
-This extension is the 3.1.x version of the [3.0.x Activity Stats MOD](https://www.phpbb.com/customise/db/mod/activity_stats_mod/).
+This extension is the 3.1.x version of the [3.0.x Activity Stats MOD](https://www.phpbb.com/customise/db/mod/activity_stats_mod/) merged with [3.0.x Who was here? MOD](https://www.phpbb.com/customise/db/mod/nv_who_was_here/).
+
+## Features
+
+* adjust the timespan that is considered for calculating the "lately" activities in ACP
+* show count of new topics, new posts and newly registered users in that timespan ("Activity Stats")
+* list of useres who have been active lately ("Who was here?")
+* en-/disable new topics in the list (adjustable in ACP)
+* en-/disable new posts in the list (adjustable in ACP)
+* en-/disable new users in the list (adjustable in ACP)
+* en-/disable bots in the list (adjustable in ACP)
+* en-/disable hidden users in the list (adjustable in ACP)
+* en-/disable guests in the record (adjustable in ACP)
+* en-/disable visit-time in the list or as "hover" on the name (adjustable in ACP)
+* display and store the record (in ACP)
+* reset-function (in ACP)
+* time is displayed with user-timezone and dst(daylight-saving-time) adjustment of the ucp
+* usernames are coloured
+* Data is cached to improve performance (cache-time adjustable in ACP)
 
 ## Installation
 
@@ -17,4 +35,7 @@ git clone https://github.com/RobertHeim/phpbb3_1-ext-activitystats.git ext/rober
 
 ### 2. activate
 Go to admin panel -> tab customise -> Manage extensions -> enable Activity Stats
+
+### 3. configure
+Go to admin panel -> tab Extensions -> Activity Stats -> Settings
 

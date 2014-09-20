@@ -18,11 +18,61 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'TWENTYFOURHOUR_STATS'	=> 'Activity over the last 24 hours',
-	'TWENTYFOURHOUR_TOPICS'	=> 'New Topics <strong>%d</strong>',
-	'TWENTYFOURHOUR_POSTS'	=> 'New Posts <strong>%d</strong>',
-	'TWENTYFOURHOUR_USERS'	=> 'New users <strong>%d</strong>',
-	'USERS_24HOUR_TOTAL'	=> '%d Users and %d guests were active over the last 24 hours',
+// for the normal sites
+	'ACTIVITY_STATS'					=> 'Activity Statistics',
+	'ACTIVITY_STATS_LATEST1'			=> 'last at',
+	'ACTIVITY_STATS_LATEST2'			=> '',//used for parts like o'clock in the timedisplay (last at vw:xy "o'clock")
+
+	'ACTIVITY_STATS_NEW_TOPICS'			=> 'New topics <strong>%d</strong>',
+	'ACTIVITY_STATS_NEW_POSTS'			=> 'New posts <strong>%d</strong>',
+	'ACTIVITY_STATS_NEW_USERS'			=> 'New users <strong>%d</strong>',
+
+	'ACTIVITY_STATS_TOTAL'				=> array(
+		0		=> 'In total there were <strong>0</strong> users online :: ',
+		1		=> 'In total there was <strong>%d</strong> user online :: ',
+		2		=> 'In total there were <strong>%d</strong> users online :: ',
+	),
+	'ACTIVITY_STATS_REG_USERS'			=> array(
+		0		=> '0 registered',
+		1		=> '%d registered',
+		2		=> '%d registered',
+	),
+	'ACTIVITY_STATS_HIDDEN'				=> array(
+		0		=> '0 hidden',
+		1		=> '%d hidden',
+		2		=> '%d hidden',
+	),
+	'ACTIVITY_STATS_BOTS'				=> array(
+		0		=> '0 bots',
+		1		=> '%d bot',
+		2		=> '%d bots',
+	),
+	'ACTIVITY_STATS_GUESTS'				=> array(
+		0		=> '0 guests',
+		1		=> '%d guest',
+		2		=> '%d guests',
+	),
+
+	'ACTIVITY_STATS_WORD'				=> ' and',
+	'ACTIVITY_STATS_EXP'				=> 'The following data is based on users active today',
+	'ACTIVITY_STATS_EXP_TIME'			=> 'The following data is based on users active over the past ',
+	'ACTIVITY_STATS_HOURS'				=> array(
+		0		=> '',
+		1		=> '%%s %1$s hour',
+		2		=> '%%s %1$s hours',
+	),
+	'ACTIVITY_STATS_MINUTES'			=> array(
+		0		=> '',
+		1		=> '%%s %1$s minute',
+		2		=> '%%s %1$s minutes',
+	),
+	'ACTIVITY_STATS_SECONDS'			=> array(
+		0		=> '',
+		1		=> '%%s %1$s second',
+		2		=> '%%s %1$s seconds',
+	),
+	'ACTIVITY_STATS_RECORD'				=> 'Most users ever online was <strong>%1$s</strong> on %2$s',
+	'ACTIVITY_STATS_RECORD_TIME'		=> 'Most users ever online was <strong>%1$s</strong> between %2$s and %3$s',
 ));
 ?>
 

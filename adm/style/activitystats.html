@@ -1,0 +1,111 @@
+<!-- INCLUDE overall_header.html -->
+
+<a id="maincontent"></a>
+
+<h1>{L_ACTIVITY_STATS_TITLE}</h1>
+<p>{ACTIVITY_STATS_MOD_VERSION}</p>
+
+<form id="acp_board" method="post" action="{U_ACTION}">
+	<fieldset>
+		<legend>{L_ACTIVITY_STATS_DISP_SET}</legend>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_bots">{L_ACTIVITY_STATS_DISP_NEW_TOPICS}:</label><br /><span>{L_ACTIVITY_STATS_DISP_NEW_TOPICS_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_new_topics" value="1" <!-- IF ACTIVITY_STATS_DISP_NEW_TOPICS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_new_topics" value="0" <!-- IF not ACTIVITY_STATS_DISP_NEW_TOPICS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_bots">{L_ACTIVITY_STATS_DISP_NEW_POSTS}:</label><br /><span>{L_ACTIVITY_STATS_DISP_NEW_POSTS_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_new_posts" value="1" <!-- IF ACTIVITY_STATS_DISP_NEW_POSTS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_new_posts" value="0" <!-- IF not ACTIVITY_STATS_DISP_NEW_POSTS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_bots">{L_ACTIVITY_STATS_DISP_NEW_USERS}:</label><br /><span>{L_ACTIVITY_STATS_DISP_NEW_USERS_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_new_users" value="1" <!-- IF ACTIVITY_STATS_DISP_NEW_USERS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_new_users" value="0" <!-- IF not ACTIVITY_STATS_DISP_NEW_USERS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_bots">{L_ACTIVITY_STATS_DISP_BOTS}:</label><br /><span>{L_ACTIVITY_STATS_DISP_BOTS_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_bots" value="1" <!-- IF ACTIVITY_STATS_DISP_BOTS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_bots" value="0" <!-- IF not ACTIVITY_STATS_DISP_BOTS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_guests">{L_ACTIVITY_STATS_DISP_GUESTS}:</label><br /><span>{L_ACTIVITY_STATS_DISP_GUESTS_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_guests" value="1" <!-- IF ACTIVITY_STATS_DISP_GUESTS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_guests" value="0" <!-- IF not ACTIVITY_STATS_DISP_GUESTS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_hidden">{L_ACTIVITY_STATS_DISP_HIDDEN}:</label><br /><span>{L_ACTIVITY_STATS_DISP_HIDDEN_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_hidden" value="1" <!-- IF ACTIVITY_STATS_DISP_HIDDEN -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_hidden" value="0" <!-- IF not ACTIVITY_STATS_DISP_HIDDEN -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_time">{L_ACTIVITY_STATS_DISP_TIME}:</label><br /><span>{L_ACTIVITY_STATS_DISP_TIME_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_time" value="1" <!-- IF ACTIVITY_STATS_DISP_TIME == 1 -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_time" value="0" <!-- IF ACTIVITY_STATS_DISP_TIME == 0 -->checked="checked"<!-- ENDIF --> /> {L_NO}
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_time" value="2" <!-- IF ACTIVITY_STATS_DISP_TIME == 2 -->checked="checked"<!-- ENDIF --> /> {L_ACTIVITY_STATS_DISP_HOVER}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_time_format">{L_ACTIVITY_STATS_DISP_TIME_FORMAT}:</label><br /><span>{L_DEFAULT_DATE_FORMAT_EXPLAIN}</span></dt>
+			<dd><input type="text" name="robertheim_activitystats_disp_time_format" size="12" value="{ACTIVITY_STATS_DISP_TIME_FORMAT}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_disp_ip">{L_ACTIVITY_STATS_DISP_IP}:</label><br /><span>{L_ACTIVITY_STATS_DISP_IP_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_disp_ip" value="1" <!-- IF ACTIVITY_STATS_DISP_IP -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_disp_ip" value="0" <!-- IF not ACTIVITY_STATS_DISP_IP -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{L_ACTIVITY_STATS_DISP_SET}</legend>
+		<dl>
+			<dt><label for="robertheim_activitystats_version">{L_ACTIVITY_STATS_VERSION}:</label><br /><span>{L_ACTIVITY_STATS_VERSION_EXP}</span></dt>
+			<dd><select name="robertheim_activitystats_version">
+					<option value="1" <!-- IF ACTIVITY_STATS_VERSION -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_VERSION1}</option>
+					<option value="0" <!-- IF not ACTIVITY_STATS_VERSION -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_VERSION2}</option>
+				</select></dd>
+		</dl>
+		<dl><dt><label for="robertheim_activitystats_del_time">{L_ACTIVITY_STATS_VERSION2}:</label></dt>
+			<dd><input type="text" name="robertheim_activitystats_del_time_h" size="6" value="{ACTIVITY_STATS_DEL_TIME_H}" /> {L_HOURS}</dd>
+			<dd><input type="text" name="robertheim_activitystats_del_time_m" size="6" value="{ACTIVITY_STATS_DEL_TIME_M}" /> {L_MINUTES}</dd>
+			<dd><input type="text" name="robertheim_activitystats_del_time_s" size="6" value="{ACTIVITY_STATS_DEL_TIME_S}" /> {L_SECONDS}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_sort_by">{L_ACTIVITY_STATS_SORT_BY}:</label><br /><span>{L_ACTIVITY_STATS_SORT_BY_EXP}</span></dt>
+			<dd><select name="robertheim_activitystats_sort_by">
+					<option value="0" <!-- IF ACTIVITY_STATS_SORT_BY == 0 -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_SORT_BY_0}</option>
+					<option value="1" <!-- IF ACTIVITY_STATS_SORT_BY == 1 -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_SORT_BY_1}</option>
+					<option value="2" <!-- IF ACTIVITY_STATS_SORT_BY == 2 -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_SORT_BY_2}</option>
+					<option value="3" <!-- IF ACTIVITY_STATS_SORT_BY == 3 -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_SORT_BY_3}</option>
+					<option value="4" <!-- IF ACTIVITY_STATS_SORT_BY == 4 -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_SORT_BY_4}</option>
+					<option value="5" <!-- IF ACTIVITY_STATS_SORT_BY == 5 -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_SORT_BY_5}</option>
+				</select></dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_record">{L_ACTIVITY_STATS_RECORD}:</label><br /><span>{L_ACTIVITY_STATS_RECORD_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_record" value="1" <!-- IF ACTIVITY_STATS_RECORD -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_record" value="0" <!-- IF not ACTIVITY_STATS_RECORD -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label for="robertheim_activitystats_record_timestamp">{L_ACTIVITY_STATS_RECORD_TIMESTAMP}:</label><br /><span>{L_DEFAULT_DATE_FORMAT_EXPLAIN}</span></dt>
+			<dd><input type="text" name="robertheim_activitystats_record_timestamp" size="12" value="{ACTIVITY_STATS_RECORD_TIMESTAMP}" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<dl><dt><label for="robertheim_activitystats_cache_time">{L_ACTIVITY_STATS_CACHE_TIME}:</label><br /><span>{L_ACTIVITY_STATS_CACHE_TIME_EXP}</span></dt>
+			<dd><input type="text" name="robertheim_activitystats_cache_time" size="12" value="{ACTIVITY_STATS_CACHE_TIME}" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<dl>
+			<dt><label for="robertheim_activitystats_reset">{L_ACTIVITY_STATS_RESET}:</label><br /><span>{L_ACTIVITY_STATS_RESET_EXP}</span></dt>
+			<dd><input type="radio" class="radio" name="robertheim_activitystats_reset" value="1" onclick="alert('{L_ACTIVITY_STATS_RESET_TRUE}');" /> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="robertheim_activitystats_reset" value="0" checked="checked" /> {L_NO}</dd>
+		</dl>
+	</fieldset>
+
+	<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+{S_FORM_TOKEN}
+</form>
+<!-- INCLUDE overall_footer.html -->

@@ -1,7 +1,6 @@
-<!-- IF not S_IS_BOT -->
-<h3 id="twentyfourhour_stats">{L_TWENTYFOURHOUR_STATS}</h3>
-<p>
-{TWENTYFOURHOUR_POSTS} &bull; {TWENTYFOURHOUR_TOPICS} &bull; {TWENTYFOURHOUR_USERS}<br/>
-{USERS_24HOUR_TOTAL}: <!-- BEGIN lastvisit -->{lastvisit.USERNAME_FULL}<!-- IF not lastvisit.S_LAST_ROW -->{L_COMMA_SEPARATOR} <!-- ENDIF --><!-- END lastvisit -->
-</p>
+<!-- IF ACTIVITY_STATS_TOTAL -->
+	<h3>{L_ACTIVITY_STATS}</h3>
+	{ACTIVITY_STATS_EXP}.<br/><br/>
+	{ACTIVITY_STATS_TOTAL_NEWS}<br/>
+	<p>{ACTIVITY_STATS_TOTAL}<br />{ACTIVITY_STATS_RECORD}<br/>{ACTIVITY_STATS_LIST}</p>
 <!-- ENDIF -->
