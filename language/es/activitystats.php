@@ -20,7 +20,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 // for the normal sites
 	'ACTIVITY_STATS'					=> 'Estadísticas de actividad',
-	'ACTIVITY_STATS_LATEST1'			=> 'basado en',
+	'ACTIVITY_STATS_LATEST1'			=> 'Última a las',
 	'ACTIVITY_STATS_LATEST2'			=> '',//used for parts like o'clock in the timedisplay (last at vw:xy "o'clock")
 
 	'ACTIVITY_STATS_NEW_TOPICS'			=> 'Nuevos temas <strong>%d</strong>',
@@ -74,5 +74,3 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_RECORD'				=> 'La mayoría de usuarios conectados a la vez fue <strong>%1$s</strong> el %2$s',
 	'ACTIVITY_STATS_RECORD_TIME'		=> 'La mayoría de usuarios conectados a la vez fue <strong>%1$s</strong> entre %2$s y %3$s',
 ));
-?>
-
