@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Displays statistics of the latest activities on the boards index site.",
 	"homepage": "https://github.com/RobertHeim/phpbb3_1-ext-activitystats",
-	"version": "1.1.1-DEV",
+	"version": "1.1.2-DEV",
 	"time": "2014-09-14",
 	"keywords": ["phpbb", "extension", "activity stats", "statistics", "who was here"],
 	"license": "GPL-2.0",

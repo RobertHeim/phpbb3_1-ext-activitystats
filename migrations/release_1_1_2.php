@@ -14,9 +14,9 @@ namespace robertheim\activitystats\migrations;
 */
 use robertheim\activitystats\MODES;
 
-class release_1_1_1 extends \phpbb\db\migration\migration
+class release_1_1_2 extends \phpbb\db\migration\migration
 {
-	protected $version = "1.1.1-DEV";
+	protected $version = "1.1.2-DEV";
 
 	protected $config_prefix = "robertheim_activitystats";
 
