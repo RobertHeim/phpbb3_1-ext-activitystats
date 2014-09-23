@@ -85,12 +85,12 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_CACHE_TIME'				=> 'Cache time (seconds)',
 	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Duration in which the data is not re-calculated (improves performance)',
 
-	'ACTIVITY_STATS_VERSION'				=> 'Displaying users of ...',
-	'ACTIVITY_STATS_VERSION_EXP'			=> 'Displaying users of today (since 00:00 board-timezone), or of the period set in the next option.',
-	'ACTIVITY_STATS_VERSION1'				=> 'Today',
-	'ACTIVITY_STATS_VERSION2'				=> 'Period of time',
-	'ACTIVITY_STATS_VERSION2_EXP'			=> 'type 0, if you want to display the users of the last 24h',
-	'ACTIVITY_STATS_VERSION2_EXP2'			=> 'disabled, if you have choosen "today"',
-	'ACTIVITY_STATS_VERSION2_EXP3'			=> 'seconds',
+	'ACTIVITY_STATS_MODE'					=> 'Displaying users of ...',
+	'ACTIVITY_STATS_MODE_EXP'				=> 'Displaying users of today (since 00:00 board-timezone), or of the period set in the next option.',
+	'ACTIVITY_STATS_MODE_TODAY'				=> 'Today',
+	'ACTIVITY_STATS_MODE_PERIOD'			=> 'Period of time',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP'		=> 'type 0, if you want to display the users of the last 24h',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP2'		=> 'disabled, if you have choosen "today"',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'seconds',
 
 ));

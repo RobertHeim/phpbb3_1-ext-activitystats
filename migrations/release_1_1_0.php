@@ -11,7 +11,7 @@ namespace robertheim\activitystats\migrations;
 
 class release_1_1_0 extends \phpbb\db\migration\migration
 {
-	protected $version = "1.1.1-DEV";
+	protected $version = "1.1.0-DEV";
 
 	protected $config_prefix = "robertheim_activitystats";
 
@@ -76,7 +76,6 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 			array('config.add', array($config_prefix.'_disp_hidden', 1)),
 			array('config.add', array($config_prefix.'_disp_time', 1)),
 			array('config.add', array($config_prefix.'_disp_ip', 0)),
-			array('config.add', array($config_prefix.'_version', 1)),
 			array('config.add', array($config_prefix.'_del_time_h', 24)),
 			array('config.add', array($config_prefix.'_del_time_m', 0)),
 			array('config.add', array($config_prefix.'_del_time_s', 0)),

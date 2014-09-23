@@ -13,7 +13,7 @@ namespace robertheim\activitystats\event;
 * @ignore
 */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use robertheim\activitystats\activitystats_config_constants;
+use robertheim\activitystats\MODES;
 
 /**
 * Event listener
@@ -79,9 +79,9 @@ class main_listener implements EventSubscriberInterface
 		global $config;
 		$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
 
-		// find timeperiod: today (version=1) or other configured time period (version=2)
+		// find timeperiod: today (mode=1) or other configured time period (mode=2)
 		$timestamp = time();
-		if ($config['robertheim_activitystats_version'])
+		if (MODES::TODAY == $config['robertheim_activitystats_mode'])
 		{
 			// today
 			$help_timestamp = gmmktime(0, 0, 0, gmdate('m', $timestamp), gmdate('d', $timestamp), gmdate('Y', $timestamp));
@@ -415,8 +415,8 @@ class main_listener implements EventSubscriberInterface
 			'ACTIVITY_STATS_TOTAL_NEWS' => $this->get_total_news_string($activity),
 			'ACTIVITY_STATS_LIST'		=> $user->lang['REGISTERED_USERS'] . ' ' . $users_list,
 			'ACTIVITY_STATS_TOTAL'		=> $this->get_total_users_string($activity),
-			'ACTIVITY_STATS_EXP'		=> $this->get_explanation_string($config['robertheim_activitystats_version']),
-			'ACTIVITY_STATS_RECORD'		=> $this->get_record_string($config['robertheim_activitystats_record'], $config['robertheim_activitystats_version']),
+			'ACTIVITY_STATS_EXP'		=> $this->get_explanation_string($config['robertheim_activitystats_mode']),
+			'ACTIVITY_STATS_RECORD'		=> $this->get_record_string($config['robertheim_activitystats_record'], $config['robertheim_activitystats_mode']),
 		));
 	}
 

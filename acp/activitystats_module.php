@@ -9,6 +9,11 @@
 
 namespace robertheim\activitystats\acp;
 
+/**
+* @ignore
+*/
+use robertheim\activitystats\MODES;
+
 class activitystats_module
 {
 	private $conf_prefix = 'robertheim_activitystats';
@@ -55,7 +60,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_disp_time', $request->variable($conf_prefix.'_disp_time', 0));
 			$config->set($conf_prefix.'_disp_time_format', $request->variable($conf_prefix.'_disp_time_format', 'H:i'));
 			$config->set($conf_prefix.'_disp_ip', $request->variable($conf_prefix.'_disp_ip', 0));
-			$config->set($conf_prefix.'_version', $request->variable($conf_prefix.'_version', 1));
+			$config->set($conf_prefix.'_mode', $request->variable($conf_prefix.'_mode', MODES::TODAY));
 			$config->set($conf_prefix.'_del_time_h', $request->variable($conf_prefix.'_del_time_h', 0));
 			$config->set($conf_prefix.'_del_time_m', $request->variable($conf_prefix.'_del_time_m', 0));
 			$config->set($conf_prefix.'_del_time_s', $request->variable($conf_prefix.'_del_time_s', 0));
@@ -86,7 +91,7 @@ class activitystats_module
 			'ACTIVITY_STATS_DISP_TIME'			=> $config[$conf_prefix.'_disp_time'],
 			'ACTIVITY_STATS_DISP_TIME_FORMAT'	=> $config[$conf_prefix.'_disp_time_format'],
 			'ACTIVITY_STATS_DISP_IP'			=> $config[$conf_prefix.'_disp_ip'],
-			'ACTIVITY_STATS_VERSION'			=> $config[$conf_prefix.'_version'],
+			'ACTIVITY_STATS_MODE'				=> $config[$conf_prefix.'_mode'],
 			'ACTIVITY_STATS_DEL_TIME_H'			=> $config[$conf_prefix.'_del_time_h'],
 			'ACTIVITY_STATS_DEL_TIME_M'			=> $config[$conf_prefix.'_del_time_m'],
 			'ACTIVITY_STATS_DEL_TIME_S'			=> $config[$conf_prefix.'_del_time_s'],

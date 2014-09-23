@@ -85,12 +85,12 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_CACHE_TIME'				=> 'Tiempo de cache (segundos)',
 	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Período en el que no se volverá a calcular los datos (mejora el rendimiento)',
 
-	'ACTIVITY_STATS_VERSION'				=> 'Viendo usuarios de ...',
-	'ACTIVITY_STATS_VERSION_EXP'			=> 'Viendo usuarios de hoy, o el plazo fijado en la siguiente opción.',
-	'ACTIVITY_STATS_VERSION1'				=> 'Hoy',
-	'ACTIVITY_STATS_VERSION2'				=> 'Período de tiempo',
-	'ACTIVITY_STATS_VERSION2_EXP'			=> 'tipo 0, si desea mostrar a los usuarios de las últimas 24h',
-	'ACTIVITY_STATS_VERSION2_EXP2'			=> 'deshabilitado, si ha elegido "Hoy"',
-	'ACTIVITY_STATS_VERSION2_EXP3'			=> 'segundos',
+	'ACTIVITY_STATS_MODE'					=> 'Viendo usuarios de ...',
+	'ACTIVITY_STATS_MODE_EXP'				=> 'Viendo usuarios de hoy, o el plazo fijado en la siguiente opción.',
+	'ACTIVITY_STATS_MODE_TODAY'				=> 'Hoy',
+	'ACTIVITY_STATS_MODE_PERIOD'			=> 'Período de tiempo',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP'		=> 'tipo 0, si desea mostrar a los usuarios de las últimas 24h',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP2'		=> 'deshabilitado, si ha elegido "Hoy"',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'segundos',
 
 ));

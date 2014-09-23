@@ -57,13 +57,13 @@
 	<fieldset>
 		<legend>{L_ACTIVITY_STATS_DISP_SET}</legend>
 		<dl>
-			<dt><label for="robertheim_activitystats_version">{L_ACTIVITY_STATS_VERSION}:</label><br /><span>{L_ACTIVITY_STATS_VERSION_EXP}</span></dt>
-			<dd><select name="robertheim_activitystats_version">
-					<option value="1" <!-- IF ACTIVITY_STATS_VERSION -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_VERSION1}</option>
-					<option value="0" <!-- IF not ACTIVITY_STATS_VERSION -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_VERSION2}</option>
+			<dt><label for="robertheim_activitystats_MODE">{L_ACTIVITY_STATS_MODE}:</label><br /><span>{L_ACTIVITY_STATS_MODE_EXP}</span></dt>
+			<dd><select name="robertheim_activitystats_mode">
+					<option value="1" <!-- IF ACTIVITY_STATS_MODE -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_MODE_TODAY}</option>
+					<option value="0" <!-- IF not ACTIVITY_STATS_MODE -->selected="selected"<!-- ENDIF -->>{L_ACTIVITY_STATS_MODE_PERIOD}</option>
 				</select></dd>
 		</dl>
-		<dl><dt><label for="robertheim_activitystats_del_time">{L_ACTIVITY_STATS_VERSION2}:</label></dt>
+		<dl><dt><label for="robertheim_activitystats_del_time">{L_ACTIVITY_STATS_MODE_PERIOD}:</label></dt>
 			<dd><input type="text" name="robertheim_activitystats_del_time_h" size="6" value="{ACTIVITY_STATS_DEL_TIME_H}" /> {L_HOURS}</dd>
 			<dd><input type="text" name="robertheim_activitystats_del_time_m" size="6" value="{ACTIVITY_STATS_DEL_TIME_M}" /> {L_MINUTES}</dd>
 			<dd><input type="text" name="robertheim_activitystats_del_time_s" size="6" value="{ACTIVITY_STATS_DEL_TIME_S}" /> {L_SECONDS}</dd>
