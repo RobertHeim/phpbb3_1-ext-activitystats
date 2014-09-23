@@ -28,9 +28,9 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_NEW_USERS'			=> 'Nuevos usuarios <strong>%d</strong>',
 
 	'ACTIVITY_STATS_TOTAL'				=> array(
-		0		=> 'En total hay <strong>0</strong> usuarios conectados :: ',
-		1		=> 'En total hay <strong>%d</strong> usuario conectado :: ',
-		2		=> 'En total hay <strong>%d</strong> usuarios conectados :: ',
+		0		=> 'En total hubo <strong>0</strong> usuarios conectados :: ',
+		1		=> 'En total hubo <strong>%d</strong> usuario conectado :: ',
+		2		=> 'En total hubo <strong>%d</strong> usuarios conectados :: ',
 	),
 	'ACTIVITY_STATS_REG_USERS'			=> array(
 		0		=> '0 registrados',
@@ -54,8 +54,8 @@ $lang = array_merge($lang, array(
 	),
 
 	'ACTIVITY_STATS_WORD'				=> ' y',
-	'ACTIVITY_STATS_EXP'				=> 'Los siguientes datos estan basados ​​en usuarios activos hoy',
-	'ACTIVITY_STATS_EXP_TIME'			=> 'Los siguientes datos están basados ​​en usuarios activos durante la(s) última(s) ',
+	'ACTIVITY_STATS_EXP'				=> 'Los siguientes datos estan basados en usuarios activos hoy',
+	'ACTIVITY_STATS_EXP_TIME'			=> 'Los siguientes datos están basados en usuarios activos durante la(s) última(s) ',
 	'ACTIVITY_STATS_HOURS'				=> array(
 		0		=> '',
 		1		=> '%%s %1$s hora',
@@ -71,6 +71,6 @@ $lang = array_merge($lang, array(
 		1		=> '%%s %1$s segundo',
 		2		=> '%%s %1$s segundos',
 	),
-	'ACTIVITY_STATS_RECORD'				=> 'La mayoría de usuarios conectados a la vez fue <strong>%1$s</strong> el %2$s',
-	'ACTIVITY_STATS_RECORD_TIME'		=> 'La mayoría de usuarios conectados a la vez fue <strong>%1$s</strong> entre %2$s y %3$s',
+	'ACTIVITY_STATS_RECORD'				=> 'La mayor cantidad de usuarios conectados fue <strong>%1$s</strong> el %2$s',
+	'ACTIVITY_STATS_RECORD_TIME'		=> 'La mayor cantidad de usuarios conectados fue <strong>%1$s</strong> entre %2$s y %3$s',
 ));
