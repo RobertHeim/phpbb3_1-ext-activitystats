@@ -55,6 +55,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_disp_time', $request->variable($conf_prefix.'_disp_time', 0));
 			$config->set($conf_prefix.'_disp_time_format', $request->variable($conf_prefix.'_disp_time_format', 'H:i'));
 			$config->set($conf_prefix.'_disp_ip', $request->variable($conf_prefix.'_disp_ip', 0));
+			$config->set($conf_prefix.'_version', $request->variable($conf_prefix.'_version', 1));
 			$config->set($conf_prefix.'_del_time_h', $request->variable($conf_prefix.'_del_time_h', 0));
 			$config->set($conf_prefix.'_del_time_m', $request->variable($conf_prefix.'_del_time_m', 0));
 			$config->set($conf_prefix.'_del_time_s', $request->variable($conf_prefix.'_del_time_s', 0));
