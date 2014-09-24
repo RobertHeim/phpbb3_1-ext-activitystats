@@ -15,9 +15,9 @@ namespace robertheim\activitystats\migrations;
 use robertheim\activitystats\PERMISSIONS;
 use robertheim\activitystats\PREFIXES;
 
-class release_1_1_3 extends \phpbb\db\migration\migration
+class release_1_2_0 extends \phpbb\db\migration\migration
 {
-	protected $version = "1.1.3-DEV";
+	protected $version = "1.2.0-DEV";
 
 	public function effectively_installed()
 	{
