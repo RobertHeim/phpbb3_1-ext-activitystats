@@ -22,6 +22,9 @@ This extension is the 3.1.x version of the [3.0.x Activity Stats MOD](https://ww
 * time is displayed with user-timezone and dst(daylight-saving-time) adjustment of the ucp
 * usernames are coloured
 * Data is cached to improve performance (cache-time adjustable in ACP)
+* permission who can see the stats:  
+  Disabled=everybody can always see the stats.  
+  Enabled=use user permission like configured in ACP. It can be assigned to users and/or groups. By default its assigned to the roles ROLE_ADMIN_FULL, ROLE_USER_FULL, ROLE_USER_STANDARD.  
 
 ## Installation
 
