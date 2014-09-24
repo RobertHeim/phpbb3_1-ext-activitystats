@@ -41,8 +41,6 @@ class release_1_2_0 extends \phpbb\db\migration\migration
 
 			// Set permissions for the board roles
 			array('permission.permission_set', array('ROLE_ADMIN_FULL', $p)),
-			array('permission.permission_set', array('ROLE_FORUM_FULL', $p)),
-			array('permission.permission_set', array('ROLE_FORUM_STANDARD', $p)),
 			array('permission.permission_set', array('ROLE_USER_FULL', $p)),
 			array('permission.permission_set', array('ROLE_USER_STANDARD', $p)),
 
