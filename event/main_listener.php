@@ -14,6 +14,8 @@ namespace robertheim\activitystats\event;
 */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use robertheim\activitystats\MODES;
+use robertheim\activitystats\PERMISSIONS;
+use robertheim\activitystats\PREFIXES;
 
 /**
 * Event listener
@@ -76,35 +78,37 @@ class main_listener implements EventSubscriberInterface
 
 	public function main($event)
 	{
-		global $config;
-		$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
+		global $config, $auth;
+		if (!$config[PREFIXES::CONFIG.'_check_permissions'] || $auth->acl_get(PERMISSIONS::SEE_STATS)) {
+			$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
 
-		// find timeperiod: today (mode=1) or other configured time period (mode=2)
-		$timestamp = time();
-		if (MODES::TODAY == $config['robertheim_activitystats_mode'])
-		{
-			// today
-			$help_timestamp = gmmktime(0, 0, 0, gmdate('m', $timestamp), gmdate('d', $timestamp), gmdate('Y', $timestamp));
-			$help_timestamp -= ($config['board_timezone'] * 3600);
-			$help_timestamp -= ($config['board_dst'] * 3600);
-			$timestamp = ($help_timestamp < $timestamp - 86400) ? $help_timestamp + 86400 : (($help_timestamp > $timestamp) ? $help_timestamp - 86400 : $help_timestamp);
+			// find timeperiod: today (mode=1) or other configured time period (mode=2)
+			$timestamp = time();
+			if (MODES::TODAY == $config['robertheim_activitystats_mode'])
+			{
+				// today
+				$help_timestamp = gmmktime(0, 0, 0, gmdate('m', $timestamp), gmdate('d', $timestamp), gmdate('Y', $timestamp));
+				$help_timestamp -= ($config['board_timezone'] * 3600);
+				$help_timestamp -= ($config['board_dst'] * 3600);
+				$timestamp = ($help_timestamp < $timestamp - 86400) ? $help_timestamp + 86400 : (($help_timestamp > $timestamp) ? $help_timestamp - 86400 : $help_timestamp);
+			}
+			else
+			{
+				// timeperiod
+				$timestamp -= (3600 * $config['robertheim_activitystats_del_time_h']);
+				$timestamp -= (  60 * $config['robertheim_activitystats_del_time_m']);
+				$timestamp -=         $config['robertheim_activitystats_del_time_s'];
+			}
+			$this->update_session();
+			$this->prune($timestamp);
+	
+			// don't re-calculate the data within that time, but use the cached data from the last calculation.
+			$cachetime = $config['robertheim_activitystats_cache_time'];
+	
+			// calculate the data to display or read it from the cache
+			$activity = $this->obtain_data($timestamp, $cachetime);
+			$this->display($activity);
 		}
-		else
-		{
-			// timeperiod
-			$timestamp -= (3600 * $config['robertheim_activitystats_del_time_h']);
-			$timestamp -= (  60 * $config['robertheim_activitystats_del_time_m']);
-			$timestamp -=         $config['robertheim_activitystats_del_time_s'];
-		}
-		$this->update_session();
-		$this->prune($timestamp);
-
-		// don't re-calculate the data within that time, but use the cached data from the last calculation.
-		$cachetime = $config['robertheim_activitystats_cache_time'];
-
-		// calculate the data to display or read it from the cache
-		$activity = $this->obtain_data($timestamp, $cachetime);
-		$this->display($activity);
 	}
 
 	/**

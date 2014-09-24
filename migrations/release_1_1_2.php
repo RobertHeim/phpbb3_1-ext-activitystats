@@ -13,16 +13,15 @@ namespace robertheim\activitystats\migrations;
 * @ignore
 */
 use robertheim\activitystats\MODES;
+use robertheim\activitystats\PREFIXES;
 
 class release_1_1_2 extends \phpbb\db\migration\migration
 {
 	protected $version = "1.1.2-DEV";
 
-	protected $config_prefix = "robertheim_activitystats";
-
 	public function effectively_installed()
 	{
-		return version_compare($this->config[$this->config_prefix.'_version'], $this->version, '>=');
+		return version_compare($this->config[PREFIXES::CONFIG.'_version'], $this->version, '>=');
 	}
 
 	static public function depends_on()
@@ -35,8 +34,8 @@ class release_1_1_2 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array($this->config_prefix.'_mode', MODES::TODAY)),
-			array('config.update', array($this->config_prefix.'_version', $this->version)),
+			array('config.add', array(PREFIXES::CONFIG.'_mode', MODES::TODAY)),
+			array('config.update', array(PREFIXES::CONFIG.'_version', $this->version)),
 		);
 	}
 }

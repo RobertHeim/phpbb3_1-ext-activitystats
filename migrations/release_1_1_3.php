@@ -12,17 +12,16 @@ namespace robertheim\activitystats\migrations;
 /**
 * @ignore
 */
-use robertheim\activitystats\MODES;
+use robertheim\activitystats\PERMISSIONS;
+use robertheim\activitystats\PREFIXES;
 
 class release_1_1_3 extends \phpbb\db\migration\migration
 {
 	protected $version = "1.1.3-DEV";
 
-	protected $config_prefix = "robertheim_activitystats";
-
 	public function effectively_installed()
 	{
-		return version_compare($this->config[$this->config_prefix.'_version'], $this->version, '>=');
+		return version_compare($this->config[PREFIXES::CONFIG.'_version'], $this->version, '>=');
 	}
 
 	static public function depends_on()
@@ -34,8 +33,24 @@ class release_1_1_3 extends \phpbb\db\migration\migration
 
 	public function update_data()
 	{
+		// shortcut
+		$p = PERMISSIONS::SEE_STATS;
 		return array(
-			array('config.update', array($this->config_prefix.'_version', $this->version)),
+			// add permissions
+			array('permission.add', array($p)),
+
+			// Set permissions for the board roles
+			array('permission.permission_set', array('ROLE_ADMIN_FULL', $p)),
+			array('permission.permission_set', array('ROLE_FORUM_FULL', $p)),
+			array('permission.permission_set', array('ROLE_FORUM_STANDARD', $p)),
+			array('permission.permission_set', array('ROLE_USER_FULL', $p)),
+			array('permission.permission_set', array('ROLE_USER_STANDARD', $p)),
+
+			// switch indicating if permissions should be checked
+			array('config.add', array(PREFIXES::CONFIG.'_check_permissions', 0)),
+
+			// update version
+			array('config.update', array(PREFIXES::CONFIG.'_version', $this->version)),
 		);
 	}
 }

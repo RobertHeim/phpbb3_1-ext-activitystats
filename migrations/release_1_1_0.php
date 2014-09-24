@@ -9,14 +9,17 @@
 
 namespace robertheim\activitystats\migrations;
 
+/**
+* @ignore
+*/
+use robertheim\activitystats\PREFIXES;
+
 class release_1_1_0 extends \phpbb\db\migration\migration
 {
 	protected $version = "1.1.0-DEV";
 
-	protected $config_prefix = "robertheim_activitystats";
-
     public function effectively_installed() {
-		$installed_version = $this->config[$this->config_prefix.'_version'];
+		$installed_version = $this->config[PREFIXES::CONFIG.'_version'];
 		return isset($installed_version) && version_compare($installed_version, $this->version, '>=');
     }
 
@@ -28,7 +31,7 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 	public function update_schema() {
 		return array(
 			'add_tables' => array(
-				$this->table_prefix . 'rh_activitystats'	=> array(
+				$this->table_prefix . PREFIXES::TABLE . '_activitystats'	=> array(
 					'COLUMNS'		=> array(
 						'id'				=> array('UINT', NULL, 'auto_increment'),
 						'user_id'			=> array('UINT', 0),
@@ -53,38 +56,35 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'drop_tables'    => array(
-	            $this->table_prefix . 'rh_activitystats',
+	            $this->table_prefix . PREFIXES::TABLE . '_activitystats',
         	),
 		);
 	}
 
 	public function update_data()
 	{
-		//shortcut
-		 $config_prefix = $this->config_prefix;
-
 		return array(
-			array('config.add', array($config_prefix.'_version', $this->version)),
-			array('config.add', array($config_prefix.'_cache_time', 600)),
-			array('config.add', array($config_prefix.'_record_ips', 1, true)),
-			array('config.add', array($config_prefix.'_record_time', time(), true)),
-			array('config.add', array($config_prefix.'_disp_new_topics', 1)),
-			array('config.add', array($config_prefix.'_disp_new_posts', 1)),
-			array('config.add', array($config_prefix.'_disp_new_users', 1)),
-			array('config.add', array($config_prefix.'_disp_bots', 1)),
-			array('config.add', array($config_prefix.'_disp_guests', 1)),
-			array('config.add', array($config_prefix.'_disp_hidden', 1)),
-			array('config.add', array($config_prefix.'_disp_time', 1)),
-			array('config.add', array($config_prefix.'_disp_ip', 0)),
-			array('config.add', array($config_prefix.'_del_time_h', 24)),
-			array('config.add', array($config_prefix.'_del_time_m', 0)),
-			array('config.add', array($config_prefix.'_del_time_s', 0)),
-			array('config.add', array($config_prefix.'_sort_by', 3)),
-			array('config.add', array($config_prefix.'_record', 1)),
-			array('config.add', array($config_prefix.'_record_timestamp', 'D j. M Y')),
-			array('config.add', array($config_prefix.'_reset_time', 1)),
-			array('config.add', array($config_prefix.'_last_clean', 0)),
-			array('config.add', array($config_prefix.'_disp_time_format', 'H:i')),
+			array('config.add', array(PREFIXES::CONFIG.'_version', $this->version)),
+			array('config.add', array(PREFIXES::CONFIG.'_cache_time', 600)),
+			array('config.add', array(PREFIXES::CONFIG.'_record_ips', 1, true)),
+			array('config.add', array(PREFIXES::CONFIG.'_record_time', time(), true)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_new_topics', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_new_posts', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_new_users', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_bots', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_guests', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_hidden', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_time', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_ip', 0)),
+			array('config.add', array(PREFIXES::CONFIG.'_del_time_h', 24)),
+			array('config.add', array(PREFIXES::CONFIG.'_del_time_m', 0)),
+			array('config.add', array(PREFIXES::CONFIG.'_del_time_s', 0)),
+			array('config.add', array(PREFIXES::CONFIG.'_sort_by', 3)),
+			array('config.add', array(PREFIXES::CONFIG.'_record', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_record_timestamp', 'D j. M Y')),
+			array('config.add', array(PREFIXES::CONFIG.'_reset_time', 1)),
+			array('config.add', array(PREFIXES::CONFIG.'_last_clean', 0)),
+			array('config.add', array(PREFIXES::CONFIG.'_disp_time_format', 'H:i')),
 
 			array('module.add', array(
 				'acp',

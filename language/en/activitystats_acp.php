@@ -42,6 +42,7 @@ $lang = array_merge($lang, array(
 
 	'ACTIVITY_STATS_TITLE'					=> 'Activity Stats',
 	'ACTIVITY_STATS_DISP_SET'				=> 'Display settings',
+	'ACTIVITY_STATS_OTHER'					=> 'Other settings',
 
 	// acp form
 	'ACTIVITY_STATS_DISP_NEW_TOPICS'		=> 'Show new topics',
@@ -84,6 +85,9 @@ $lang = array_merge($lang, array(
 
 	'ACTIVITY_STATS_CACHE_TIME'				=> 'Cache time (seconds)',
 	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Duration in which the data is not re-calculated (improves performance)',
+
+	'ACTIVITY_STATS_CHECK_PERMISSIONS'		=> 'Check permissions',
+	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'no=everybody should see the activity stats (ignore permission-settings); yes=use configured permissions (e.g. allow it for registered users only: ACP->permissions->global permissions -> group permissiosn -> registered users -> Advanced permissions -> Misc -> "Can see activity stats")',
 
 	'ACTIVITY_STATS_MODE'					=> 'Displaying users of ...',
 	'ACTIVITY_STATS_MODE_EXP'				=> 'Displaying users of today (since 00:00 board-timezone), or of the period set in the next option.',

@@ -13,10 +13,10 @@ namespace robertheim\activitystats\acp;
 * @ignore
 */
 use robertheim\activitystats\MODES;
+use robertheim\activitystats\PREFIXES;
 
 class activitystats_module
 {
-	private $conf_prefix = 'robertheim_activitystats';
 
 	/** @var string */
 	public $u_action;
@@ -26,7 +26,7 @@ class activitystats_module
 		global $config, $request, $template, $user, $cache;
 
 		// shortcut
-		$conf_prefix = $this->conf_prefix;
+		$conf_prefix = PREFIXES::CONFIG;
 
 		// common language file for DATEFORMAT_EXPLANATION
 		$user->add_lang('acp/board');
@@ -65,6 +65,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_del_time_m', $request->variable($conf_prefix.'_del_time_m', 0));
 			$config->set($conf_prefix.'_del_time_s', $request->variable($conf_prefix.'_del_time_s', 0));
 			$config->set($conf_prefix.'_sort_by', $request->variable($conf_prefix.'_sort_by', 0));
+			$config->set($conf_prefix.'_check_permissions', $request->variable($conf_prefix.'_check_permissions', 0));
 			$config->set($conf_prefix.'_cache_time', $request->variable($conf_prefix.'_cache_time', 600));
 			$config->set($conf_prefix.'_record', $request->variable($conf_prefix.'_record', 0));
 			$config->set($conf_prefix.'_record_timestamp', $request->variable($conf_prefix.'_record_timestamp', 'D j. M Y'));
@@ -97,6 +98,7 @@ class activitystats_module
 			'ACTIVITY_STATS_DEL_TIME_S'			=> $config[$conf_prefix.'_del_time_s'],
 			'ACTIVITY_STATS_SORT_BY'			=> $config[$conf_prefix.'_sort_by'],
 			'ACTIVITY_STATS_CACHE_TIME'			=> $config[$conf_prefix.'_cache_time'],
+			'ACTIVITY_STATS_CHECK_PERMISSIONS'	=> $config[$conf_prefix.'_check_permissions'],
 			'ACTIVITY_STATS_RECORD'				=> $config[$conf_prefix.'_record'],
 			'ACTIVITY_STATS_RECORD_TIMESTAMP'	=> $config[$conf_prefix.'_record_timestamp'],
 			'U_ACTION'							=> $this->u_action,
