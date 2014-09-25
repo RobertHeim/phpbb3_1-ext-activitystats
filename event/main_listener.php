@@ -79,6 +79,7 @@ class main_listener implements EventSubscriberInterface
 	public function main($event)
 	{
 		global $config, $auth;
+		$this->update_session();
 		if (!$config[PREFIXES::CONFIG.'_check_permissions'] || $auth->acl_get(PERMISSIONS::SEE_STATS)) {
 			$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
 
@@ -99,7 +100,6 @@ class main_listener implements EventSubscriberInterface
 				$timestamp -= (  60 * $config['robertheim_activitystats_del_time_m']);
 				$timestamp -=         $config['robertheim_activitystats_del_time_s'];
 			}
-			$this->update_session();
 			$this->prune($timestamp);
 	
 			// don't re-calculate the data within that time, but use the cached data from the last calculation.
