@@ -42,6 +42,7 @@ $lang = array_merge($lang, array(
 
 	'ACTIVITY_STATS_TITLE'					=> 'Estadísticas de actividad',
 	'ACTIVITY_STATS_DISP_SET'				=> 'Ajustes de pantalla',
+	'ACTIVITY_STATS_OTHER'					=> 'Otros ajustes',
 
 	// acp form
 	'ACTIVITY_STATS_DISP_NEW_TOPICS'		=> 'Mostrar nuevos temas',
@@ -84,6 +85,9 @@ $lang = array_merge($lang, array(
 
 	'ACTIVITY_STATS_CACHE_TIME'				=> 'Tiempo de cache (segundos)',
 	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Período en el que no se volverá a calcular los datos (mejora el rendimiento)',
+
+	'ACTIVITY_STATS_CHECK_PERMISSIONS'		=> 'Comprobar permisos',
+	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'No=Todos verán las estadísticas de actividad (ignorar los ajustes de permisos); Si=Usar permisos configurados (por ejemplo, permitir sólo para usuarios registrados: ACP -> Permisos -> Permisos Globales -> Permisos de grupos -> Usuarios registrados -> Permisos avanzados -> Varios -> "Puede ver las estadísticas de actividad")',
 
 	'ACTIVITY_STATS_MODE'					=> 'Viendo usuarios de ...',
 	'ACTIVITY_STATS_MODE_EXP'				=> 'Viendo usuarios de hoy, o el plazo fijado en la siguiente opción.',
