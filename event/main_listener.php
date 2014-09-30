@@ -84,23 +84,32 @@ class main_listener implements EventSubscriberInterface
 			$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
 
 			// find timeperiod: today (mode=1) or other configured time period (mode=2)
-			$timestamp = time();
+			$timestamp = 0;
 			if (MODES::TODAY == $config['robertheim_activitystats_mode'])
 			{
 				// today
-				$help_timestamp = gmmktime(0, 0, 0, gmdate('m', $timestamp), gmdate('d', $timestamp), gmdate('Y', $timestamp));
-				$help_timestamp -= ($config['board_timezone'] * 3600);
-				$help_timestamp -= ($config['board_dst'] * 3600);
-				$timestamp = ($help_timestamp < $timestamp - 86400) ? $help_timestamp + 86400 : (($help_timestamp > $timestamp) ? $help_timestamp - 86400 : $help_timestamp);
+				// we calculate timestamp of midnight in the users timezone
+
+				$timezone_name = empty($this->user->data['user_timezone']) ? $config['board_timezone'] : $this->user->data['user_timezone'];
+				$timezone = new \DateTimeZone($timezone_name);
+				$now = new \DateTime("now", $timezone);
+				$midnight = clone $now;
+				$midnight->setTime(0,0,0);
+				$timestamp = $midnight->getTimestamp();
+				// we prune when the last timezone on earth hits the new day.
+				// that means all where last visit was before UTC-10
+				$this->prune(time() - (10*3600));
 			}
 			else
 			{
-				// timeperiod
+				// use UTC for period
+				$timestamp = time();
 				$timestamp -= (3600 * $config['robertheim_activitystats_del_time_h']);
 				$timestamp -= (  60 * $config['robertheim_activitystats_del_time_m']);
 				$timestamp -=         $config['robertheim_activitystats_del_time_s'];
+				// prune everything before the period
+				$this->prune($timestamp);
 			}
-			$this->prune($timestamp);
 	
 			// don't re-calculate the data within that time, but use the cached data from the last calculation.
 			$cachetime = $config['robertheim_activitystats_cache_time'];
@@ -114,7 +123,7 @@ class main_listener implements EventSubscriberInterface
 	/**
 	 * calculates the data which shall be displayed or reads it from the cache if within $cachetime.
 	 *
-	 * @param $timestamp the interval for which data should be displayed
+	 * @param $timestamp the earliest timestamp for which data should be displayed
 	 * @param $cachetime timespan indicating how long the calculated data should be cached, before calculating it again
 	 * @return array the activity data based on the boards configuration
 	 */
@@ -131,7 +140,7 @@ class main_listener implements EventSubscriberInterface
 				// total new topics
 				$sql = 'SELECT COUNT(topic_id) AS new_topics
 						FROM ' . TOPICS_TABLE . '
-						WHERE topic_time > ' . $timestamp;
+						WHERE topic_time >= ' . $timestamp;
 				$result = $this->db->sql_query($sql);
 				$activity['new_topics'] = $this->db->sql_fetchfield('new_topics');
 				$this->db->sql_freeresult($result);
@@ -142,7 +151,7 @@ class main_listener implements EventSubscriberInterface
 				// total new posts
 				$sql = 'SELECT COUNT(post_id) AS new_posts
 						FROM ' . POSTS_TABLE . '
-						WHERE post_time > ' . $timestamp;
+						WHERE post_time >= ' . $timestamp;
 				$result = $this->db->sql_query($sql);
 				$activity['new_posts'] = $this->db->sql_fetchfield('new_posts');
 				$this->db->sql_freeresult($result);
@@ -153,7 +162,7 @@ class main_listener implements EventSubscriberInterface
 				// total new users (counts inactive users as well)
 				$sql = 'SELECT COUNT(user_id) AS new_users
 						FROM ' . USERS_TABLE . '
-						WHERE user_regdate > ' . $timestamp;
+						WHERE user_regdate >= ' . $timestamp;
 				$result = $this->db->sql_query($sql);
 				$activity['new_users'] = $this->db->sql_fetchfield('new_users');
 				$this->db->sql_freeresult($result);
@@ -177,16 +186,20 @@ class main_listener implements EventSubscriberInterface
 			}
 			$sql_ordering = (($config['robertheim_activitystats_sort_by'] % 2) == self::SORT_ASC) ? 'ASC' : 'DESC';
 
-			$count_total = $count_reg = $count_hidden = $count_bot = $count_guests = 0;
+			// count of total_users (eventually including ANONYMOUS several times)
+			$count_total = 0;
+			// count of different user types
+			$count_reg = $count_hidden = $count_bot = $count_guests = 0;
 
-			// holds all users-data
+			// holds all users-data without ANONYMOUS
 			$users_list = array();
 
-			// this array  is used to prevent counting users (or bots etc) twice (while ANONYMOUS is counted several times)
+			// this array is used to prevent counting users (or bots etc) twice (while ANONYMOUS is counted several times)
 			$ids_user = array();
 
 			$sql = 'SELECT user_id, username, username_clean, user_colour, user_type, viewonline, lastpage, user_ip
 				FROM  ' . self::table() . "
+				WHERE lastpage >= " . ((int) $timestamp) . "
 				ORDER BY $sql_order_by $sql_ordering";
 			$result = $db->sql_query($sql);
 
@@ -194,48 +207,65 @@ class main_listener implements EventSubscriberInterface
 			{
 				if (!in_array($row['user_id'], $ids_user))
 				{
-					// don't count / display any user twice - except ANONYMOUS
+					// dont put ANONYMOUS in ids_user, so we count all guests while users are only counted once
 					if ($row['user_id'] != ANONYMOUS) {
 						$ids_user[] = $row['user_id'];
 					}
 
-					// we only count the ones who will be displayed (as defined in the configuration)
-					$will_be_displayed = true;
+					// check if we will display the username
+					$display_username = true;
 
-					if ($row['user_id'] == ANONYMOUS && ($will_be_displayed = $config['robertheim_activitystats_disp_guests']))
+					if ($row['user_id'] == ANONYMOUS)
 					{
+						// guest
+						$display_username = false;
 						$count_guests++;
+						$count_total++;
 					}
-					else if ($row['user_type'] == USER_IGNORE && ($will_be_displayed = $config['robertheim_activitystats_disp_bots']))
+					else if ($row['user_type'] == USER_IGNORE)
 					{
-						$count_bot++;
+						// bot
+						$display_username = $config['robertheim_activitystats_disp_bots'];
+						if ($display_username)
+						{
+							$count_bot++;
+							$count_total++;
+						}
 					}
 					else if ($row['viewonline'] == 1)
 					{
+						// registered users that not hides his online status
 						$count_reg++;
+						$count_total++;
 					}
-					else if ($will_be_displayed = $config['robertheim_activitystats_disp_hidden'])
+					else
 					{
-						$count_hidden++;
+						// hidden users
+						$display_username = $config['robertheim_activitystats_disp_hidden'];
+						if ($display_username)
+						{
+							$count_hidden++;
+							$count_total++;
+						}
 					}
 
-					if ($will_be_displayed) {
+					if ($display_username)
+					{
 						// replace username with the printable username
 						$row['username'] = get_username_string((($row['user_type'] == USER_IGNORE) ? 'no_profile' : 'full'), $row['user_id'], $row['username'], $row['user_colour']);
-						$users_list[]=$row;
-						$count_total++;
+						$users_list[] = $row;
 					}
 				}
 			}
 
 			// set calculated counts to activity
-			$activity['count_total'] = $count_total;
-			$activity['count_reg'] = $count_reg;
-			$activity['count_hidden'] = $count_hidden;
-			$activity['count_bot'] = $count_bot;
-			$activity['count_guests'] = $count_guests;
+			$activity['count_total']	= $count_total;
+			$activity['count_reg']		= $count_reg;
+			$activity['count_hidden']	= $count_hidden;
+			$activity['count_bot']		= $count_bot;
+			$activity['count_guests']	= $count_guests;
 
-			$activity['users_list'] = $users_list;
+			$activity['users_list']		= $users_list;
 
 			// Need to update the record?
 			if ($config['robertheim_activitystats_record_ips'] < $count_total)
@@ -349,7 +379,7 @@ class main_listener implements EventSubscriberInterface
 					'user_colour'		=> $user->data['user_colour'],
 					'user_type'			=> $user->data['user_type'],
 					'viewonline'		=> 1,
-					'lastpage'		=> time(),
+					'lastpage'			=> time(),
 				);
 				$db->sql_query('INSERT INTO ' . self::table() . ' ' . $db->sql_build_array('INSERT', $data));
 			}
@@ -385,7 +415,7 @@ class main_listener implements EventSubscriberInterface
 			));
 		}
 
-		$users_list='';
+		$users_list = '';
 		foreach ($activity['users_list'] as $key => $row) {
 			$hover_time = (($config['robertheim_activitystats_disp_time'] == '2') ? $user->lang['ACTIVITY_STATS_LATEST1'] . '&nbsp;' . $user->format_date($row['lastpage'], $config['robertheim_activitystats_disp_time_format']) . $user->lang['ACTIVITY_STATS_LATEST2'] : '' );
 			$hover_ip = ($auth->acl_get('a_') && $config['robertheim_activitystats_disp_ip']) ? $user->lang['IP'] . ':&nbsp;' . $row['user_ip'] : '';
@@ -425,26 +455,22 @@ class main_listener implements EventSubscriberInterface
 	}
 
 	/**
-	 * Deletes the users from the list, whose visit is to old.
+	 * Deletes the users from the list, whose last visit is too old.
+	 *
 	 * @param $timestamp everything before timestamp will be deleted
 	 */
 	static public function prune($timestamp)
 	{
-		global $config;
+		global $config, $db;
 
-		if ($config['robertheim_activitystats_last_clean'] != $timestamp)
+		if ($config[PREFIXES::CONFIG.'_last_clean'] != $timestamp)
 		{
-			global $db;
-
-			$db->sql_return_on_error(true);
 			$sql = 'DELETE FROM ' . self::table() . '
-				WHERE lastpage <= ' . $timestamp;
-			$result = $db->sql_query($sql);
-			$db->sql_return_on_error(false);
+				WHERE lastpage < ' . $timestamp;
+			$db->sql_query($sql);
 
-			$config->set('robertheim_activitystats_last_clean', $timestamp);
+			$config->set(PREFIXES::CONFIG.'_last_clean', $timestamp);
 		}
-
 		// Purging was not needed or done succesfully...
 		return true;
 	}
