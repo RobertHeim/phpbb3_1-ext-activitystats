@@ -80,7 +80,8 @@ class main_listener implements EventSubscriberInterface
 	{
 		global $config, $auth;
 		$this->update_session();
-		if (!$config[PREFIXES::CONFIG.'_check_permissions'] || $auth->acl_get(PERMISSIONS::SEE_STATS)) {
+		if (!$config[PREFIXES::CONFIG.'_check_permissions'] || $auth->acl_get(PERMISSIONS::SEE_STATS))
+		{
 			$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
 
 			// find timeperiod: today (mode=1) or other configured time period (mode=2)
@@ -208,7 +209,8 @@ class main_listener implements EventSubscriberInterface
 				if (!in_array($row['user_id'], $ids_user))
 				{
 					// dont put ANONYMOUS in ids_user, so we count all guests while users are only counted once
-					if ($row['user_id'] != ANONYMOUS) {
+					if ($row['user_id'] != ANONYMOUS)
+					{
 						$ids_user[] = $row['user_id'];
 					}
 
@@ -416,7 +418,8 @@ class main_listener implements EventSubscriberInterface
 		}
 
 		$users_list = '';
-		foreach ($activity['users_list'] as $key => $row) {
+		foreach ($activity['users_list'] as $key => $row)
+		{
 			$hover_time = (($config['robertheim_activitystats_disp_time'] == '2') ? $user->lang['ACTIVITY_STATS_LATEST1'] . '&nbsp;' . $user->format_date($row['lastpage'], $config['robertheim_activitystats_disp_time_format']) . $user->lang['ACTIVITY_STATS_LATEST2'] : '' );
 			$hover_ip = ($auth->acl_get('a_') && $config['robertheim_activitystats_disp_ip']) ? $user->lang['IP'] . ':&nbsp;' . $row['user_ip'] : '';
 			$hover_info = (($hover_time || $hover_ip) ? ' title="' . $hover_time . (($hover_time && $hover_ip) ? ' | ' : '') . $hover_ip . '"' : '');
@@ -495,9 +498,11 @@ class main_listener implements EventSubscriberInterface
 			$s = (int) $config['robertheim_activitystats_del_time_s'];
 
 			$plural = $h;
-			if (0==$h) {
+			if (0==$h)
+			{
 				$plural = $m;
-				if (0==$m) {
+				if (0==$m)
+				{
 					$plural = $s;
 				}
 			}
