@@ -99,7 +99,7 @@ class main_listener implements EventSubscriberInterface
 				$timestamp = $midnight->getTimestamp();
 				// we prune when the last timezone on earth hits the new day.
 				// that means all where last visit was before UTC-10
-				$this->prune(time() - (10*3600));
+				$this->prune(time() - 36000); // -10*3600
 			}
 			else
 			{
@@ -111,7 +111,10 @@ class main_listener implements EventSubscriberInterface
 				// prune everything before the period
 				$this->prune($timestamp);
 			}
-	
+
+			// after updating and pruning the sessions table check if a new record is reached
+			$this->check_record();
+
 			// don't re-calculate the data within that time, but use the cached data from the last calculation.
 			$cachetime = $config['robertheim_activitystats_cache_time'];
 
@@ -269,13 +272,6 @@ class main_listener implements EventSubscriberInterface
 
 			$activity['users_list']		= $users_list;
 
-			// Need to update the record?
-			if ($config['robertheim_activitystats_record_count'] < $count_total)
-			{
-				$config->set('robertheim_activitystats_record_count', $count_total, true);
-				$config->set('robertheim_activitystats_record_time', time(), true);
-			}
-
 			if ($cachetime > 0)
 			{
 				$this->cache->put('_robertheim_activitystats', $activity, $cachetime);
@@ -283,6 +279,26 @@ class main_listener implements EventSubscriberInterface
 		}
 	
 		return $activity;
+	}
+
+	/**
+	* Checks if a new record is reached and if so stores the new record.
+	*/
+	private function check_record()
+	{
+		global $config;
+		// fetch count of users that have been online
+		$sql = 'SELECT DISTINCT COUNT(user_id) AS count_total
+			FROM  ' . self::table();
+		$result = $this->db->sql_query($sql);
+		$count_total = (int) $this->db->sql_fetchfield('count_total');
+		$this->db->sql_freeresult($result);
+		// Need to update the record?
+		if ($config['robertheim_activitystats_record_count'] < $count_total)
+		{
+			$config->set('robertheim_activitystats_record_count', $count_total, true);
+			$config->set('robertheim_activitystats_record_time', time(), true);
+		}
 	}
 
 	/**
@@ -294,6 +310,8 @@ class main_listener implements EventSubscriberInterface
 
 		if ($user->data['user_id'] != ANONYMOUS)
 		{
+			// current user is logged in - however he might have opened another session as anonymous from the same ip.
+			// so we need to check user_id and (anonymous AND ip=user->ip)
 			$data = array(
 				'user_id'			=> $user->data['user_id'],
 				'user_ip'			=> $user->ip,
@@ -319,7 +337,6 @@ class main_listener implements EventSubscriberInterface
 				// database does not exist yet...
 				return;
 			}
-
 			$sql_affectedrows = (int) $db->sql_affectedrows();
 			if ($sql_affectedrows != 1)
 			{
