@@ -75,6 +75,7 @@ $lang = array_merge($lang, array(
 		1		=> '%%s %1$s segundo',
 		2		=> '%%s %1$s segundos',
 	),
-	'ACTIVITY_STATS_RECORD'				=> 'La mayor cantidad de usuarios conectados fue <strong>%1$s</strong> el %2$s',
-	'ACTIVITY_STATS_RECORD_TIME'		=> 'La mayor cantidad de usuarios conectados fue <strong>%1$s</strong> entre %2$s y %3$s',
+	'ACTIVITY_STATS_RECORD_DAY'			=> 'La mayor cantidad de usuarios conectados fue <strong>%1$s</strong> el %2$s',
+	'ACTIVITY_STATS_RECORD_PERIOD'		=> 'La mayor cantidad de usuarios conectados fue <strong>%1$s</strong> entre %2$s y %3$s',
 ));
+

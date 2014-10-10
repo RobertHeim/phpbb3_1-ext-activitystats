@@ -41,3 +41,4 @@ use robertheim\activitystats\PERMISSIONS;
 $lang = array_merge($lang, array(
 	'ACL_'.mb_strtoupper(PERMISSIONS::SEE_STATS)	=> 'Can see activity stats',
 ));
+

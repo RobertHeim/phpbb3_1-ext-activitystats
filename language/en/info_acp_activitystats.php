@@ -42,3 +42,4 @@ $lang = array_merge($lang, array(
 	'ACP_ACTIVITY_STATS_TITLE'			=> 'Activity Stats',
 	'ACP_ACTIVITY_STATS_SETTINGS'		=> 'Settings',
 ));
+

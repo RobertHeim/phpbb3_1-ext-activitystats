@@ -114,7 +114,7 @@ class main_listener implements EventSubscriberInterface
 	
 			// don't re-calculate the data within that time, but use the cached data from the last calculation.
 			$cachetime = $config['robertheim_activitystats_cache_time'];
-	
+
 			// calculate the data to display or read it from the cache
 			$activity = $this->obtain_data($timestamp, $cachetime);
 			$this->display($activity);
@@ -270,9 +270,9 @@ class main_listener implements EventSubscriberInterface
 			$activity['users_list']		= $users_list;
 
 			// Need to update the record?
-			if ($config['robertheim_activitystats_record_ips'] < $count_total)
+			if ($config['robertheim_activitystats_record_count'] < $count_total)
 			{
-				$config->set('robertheim_activitystats_record_ips', $count_total, true);
+				$config->set('robertheim_activitystats_record_count', $count_total, true);
 				$config->set('robertheim_activitystats_record_time', time(), true);
 			}
 
@@ -448,12 +448,18 @@ class main_listener implements EventSubscriberInterface
 			$users_list = $user->lang['NO_ONLINE_USERS'];
 		}
 
+		$record_string = '';
+		if ($config['robertheim_activitystats_record'])
+		{
+			$record_string = $this->get_record_string();
+		}
+
 		$this->template->assign_vars(array(
 			'ACTIVITY_STATS_TOTAL_NEWS' => $this->get_total_news_string($activity),
 			'ACTIVITY_STATS_LIST'		=> $user->lang['REGISTERED_USERS'] . ' ' . $users_list,
 			'ACTIVITY_STATS_TOTAL'		=> $this->get_total_users_string($activity),
 			'ACTIVITY_STATS_EXP'		=> $this->get_explanation_string($config['robertheim_activitystats_mode']),
-			'ACTIVITY_STATS_RECORD'		=> $this->get_record_string($config['robertheim_activitystats_record'], $config['robertheim_activitystats_mode']),
+			'ACTIVITY_STATS_RECORD'		=> $record_string,
 		));
 	}
 
@@ -528,30 +534,28 @@ class main_listener implements EventSubscriberInterface
 	* Demo:	Most users ever online was 1 on Mon 7. Sep 2009
 	*		Most users ever online was 1 between Mon 7. Sep 2009 and Tue 8. Sep 2009
 	*/
-	private function get_record_string($active, $mode)
+	private function get_record_string()
 	{
 		global $config, $user;
 
-		if (!$active)
+		$format = $config['robertheim_activitystats_record_timeformat'];
+
+		if (MODES::TODAY == $config['robertheim_activitystats_mode'])
 		{
-			return '';
-		}
-		if ($mode)
-		{
-			return sprintf($user->lang['ACTIVITY_STATS_RECORD'],
-				$config['robertheim_activitystats_record_ips'],
-				$user->format_date($config['robertheim_activitystats_record_time'], $config['robertheim_activitystats_record_timestamp'])) . '<br />';
+			return sprintf($user->lang['ACTIVITY_STATS_RECORD_DAY'],
+				$config['robertheim_activitystats_record_count'],
+				$user->format_date($config['robertheim_activitystats_record_time'], $format)) . '<br />';
 		}
 		else
 		{
-			$config['robertheim_activitystats_record_time2'] = $config['robertheim_activitystats_record_time'];
-			$config['robertheim_activitystats_record_time2'] -= (3600 * $config['robertheim_activitystats_del_time_h']);
- 			$config['robertheim_activitystats_record_time2'] -= (  60 * $config['robertheim_activitystats_del_time_m']);
-			$config['robertheim_activitystats_record_time2'] -=         $config['robertheim_activitystats_del_time_s'];
-			return sprintf($user->lang['ACTIVITY_STATS_RECORD_TIME'],
-				$config['robertheim_activitystats_record_ips'],
-				$user->format_date($config['robertheim_activitystats_record_time2'], $config['robertheim_activitystats_record_timestamp']),
-				$user->format_date($config['robertheim_activitystats_record_time'], $config['robertheim_activitystats_record_timestamp'])) . '<br />';
+			$period_start = $config['robertheim_activitystats_record_time'];
+			$period_start -= (3600 * $config['robertheim_activitystats_del_time_h']);
+ 			$period_start -= (  60 * $config['robertheim_activitystats_del_time_m']);
+			$period_start -=         $config['robertheim_activitystats_del_time_s'];
+			return sprintf($user->lang['ACTIVITY_STATS_RECORD_PERIOD'],
+				$config['robertheim_activitystats_record_count'],
+				$user->format_date($period_start, $format),
+				$user->format_date($config['robertheim_activitystats_record_time'], $format)) . '<br />';
 		}
 	}
 

@@ -67,7 +67,7 @@ $lang = array_merge($lang, array(
 
 	'ACTIVITY_STATS_RECORD'					=> 'Registro',
 	'ACTIVITY_STATS_RECORD_EXP'				=> 'Mostrar y guardar el registro',
-	'ACTIVITY_STATS_RECORD_TIMESTAMP'		=> 'Formato de fecha del registro',
+	'ACTIVITY_STATS_RECORD_TIMEFORMAT'		=> 'Formato de fecha del registro',
 	'ACTIVITY_STATS_RESET'					=> 'Resetear registro',
 	'ACTIVITY_STATS_RESET_EXP'				=> 'Restablece el contador de tiempo y del registro de actividades estadísticas.',
 	'ACTIVITY_STATS_RESET_TRUE'				=> 'Si envia este formulario, el registro será reseteado.',
@@ -98,3 +98,4 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'segundos',
 
 ));
+
