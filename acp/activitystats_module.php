@@ -23,7 +23,7 @@ class activitystats_module
 
 	public function main($id, $mode)
 	{
-		global $config, $request, $template, $user, $cache;
+		global $config, $request, $template, $user, $cache, $phpbb_container;
 
 		// shortcut
 		$conf_prefix = PREFIXES::CONFIG;
@@ -71,9 +71,12 @@ class activitystats_module
 			$config->set($conf_prefix.'_record_timeformat', $request->variable($conf_prefix.'_record_timeformat', 'D j. M Y'));
 			if ($request->variable($conf_prefix.'_reset', 0) > 0)
 			{
+				$reset_time = time();
 				$config->set($conf_prefix.'_record_count', 1);
-				$config->set($conf_prefix.'_record_time', time());
-				$config->set($conf_prefix.'_reset_time', time());
+				$config->set($conf_prefix.'_record_time', $reset_time);
+				$config->set($conf_prefix.'_reset_time', $reset_time);
+				$sessions_manager = $phpbb_container->get('robertheim.activitystats.sessions_manager');
+				$sessions_manager->prune($reset_time);
 			}
 			// clear cache
 			$cache->destroy('_robertheim_activitystats');

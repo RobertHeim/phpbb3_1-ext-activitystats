@@ -168,7 +168,6 @@ class sessions_manager
 		return true;
 	}
 
-
 	/**
 	 * calculates the data which shall be displayed or reads it from the cache if within $cachetime.
 	 *
