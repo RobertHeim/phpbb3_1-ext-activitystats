@@ -156,13 +156,13 @@ class sessions_manager
 	 */
 	public function prune($timestamp)
 	{
-		if ($this->config[PREFIXES::CONFIG.'_last_clean'] != $timestamp)
+		if ($this->config[PREFIXES::CONFIG . '_last_clean'] != $timestamp)
 		{
 			$sql = 'DELETE FROM ' . $this->table_prefix . TABLES::SESSIONS . '
 				WHERE lastpage < ' . $timestamp;
 			$this->db->sql_query($sql);
 
-			$this->config->set(PREFIXES::CONFIG.'_last_clean', $timestamp);
+			$this->config->set(PREFIXES::CONFIG . '_last_clean', $timestamp);
 		}
 		// Purging was not needed or done succesfully...
 		return true;
@@ -181,7 +181,7 @@ class sessions_manager
 		{
 			$activity = array();
 	
-			if ($this->config['robertheim_activitystats_disp_new_topics'])
+			if ($this->config[PREFIXES::CONFIG . '_disp_new_topics'])
 			{
 				// total new topics
 				$sql = 'SELECT COUNT(topic_id) AS new_topics
@@ -192,7 +192,7 @@ class sessions_manager
 				$this->db->sql_freeresult($result);
 			}
 
-			if ($this->config['robertheim_activitystats_disp_new_posts'])
+			if ($this->config[PREFIXES::CONFIG . '_disp_new_posts'])
 			{
 				// total new posts
 				$sql = 'SELECT COUNT(post_id) AS new_posts
@@ -203,7 +203,7 @@ class sessions_manager
 				$this->db->sql_freeresult($result);
 			}
 
-			if ($this->config['robertheim_activitystats_disp_new_users'])
+			if ($this->config[PREFIXES::CONFIG . '_disp_new_users'])
 			{
 				// total new users (counts inactive users as well)
 				$sql = 'SELECT COUNT(user_id) AS new_users
@@ -214,7 +214,7 @@ class sessions_manager
 				$this->db->sql_freeresult($result);
 			}
 
-			switch ($this->config['robertheim_activitystats_sort_by'])
+			switch ($this->config[PREFIXES::CONFIG . '_sort_by'])
 			{
 				case self::SORT_USERNAME_ASC:
 				case self::SORT_USERNAME_DESC:
@@ -230,7 +230,7 @@ class sessions_manager
 					$sql_order_by = 'lastpage';
 				break;
 			}
-			$sql_ordering = (($this->config['robertheim_activitystats_sort_by'] % 2) == self::SORT_ASC) ? 'ASC' : 'DESC';
+			$sql_ordering = (($this->config[PREFIXES::CONFIG . '_sort_by'] % 2) == self::SORT_ASC) ? 'ASC' : 'DESC';
 
 			// count of total_users (eventually including ANONYMOUS several times)
 			$count_total = 0;
@@ -272,7 +272,7 @@ class sessions_manager
 					else if ($row['user_type'] == USER_IGNORE)
 					{
 						// bot
-						$display_username = $this->config['robertheim_activitystats_disp_bots'];
+						$display_username = $this->config[PREFIXES::CONFIG . '_disp_bots'];
 						if ($display_username)
 						{
 							$count_bot++;
@@ -288,7 +288,7 @@ class sessions_manager
 					else
 					{
 						// hidden users
-						$display_username = $this->config['robertheim_activitystats_disp_hidden'];
+						$display_username = $this->config[PREFIXES::CONFIG . '_disp_hidden'];
 						if ($display_username)
 						{
 							$count_hidden++;
@@ -335,10 +335,10 @@ class sessions_manager
 		$count_total = (int) $this->db->sql_fetchfield('count_total');
 		$this->db->sql_freeresult($result);
 		// Need to update the record?
-		if ($this->config['robertheim_activitystats_record_count'] < $count_total)
+		if ($this->config[PREFIXES::CONFIG . '_record_count'] < $count_total)
 		{
-			$this->config->set('robertheim_activitystats_record_count', $count_total, true);
-			$this->config->set('robertheim_activitystats_record_time', time(), true);
+			$this->config->set(PREFIXES::CONFIG . '_record_count', $count_total, true);
+			$this->config->set(PREFIXES::CONFIG . '_record_time', time(), true);
 		}
 	}
 }
