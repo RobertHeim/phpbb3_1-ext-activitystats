@@ -46,6 +46,7 @@ class sessions_manager
 		$this->cache		= $cache;
 		$this->table_prefix	= $table_prefix;
 	}
+
 	/**
 	* Update the users session in the table.
 	*/
