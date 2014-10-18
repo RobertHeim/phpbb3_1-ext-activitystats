@@ -13,6 +13,7 @@ namespace robertheim\activitystats\migrations;
 * @ignore
 */
 use robertheim\activitystats\PREFIXES;
+use robertheim\activitystats\TABLES;
 
 class release_1_1_0 extends \phpbb\db\migration\migration
 {
@@ -31,7 +32,7 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 	public function update_schema() {
 		return array(
 			'add_tables' => array(
-				$this->table_prefix . PREFIXES::TABLE . '_activitystats'	=> array(
+				$this->table_prefix . TABLES::SESSIONS	=> array(
 					'COLUMNS'		=> array(
 						'id'				=> array('UINT', NULL, 'auto_increment'),
 						'user_id'			=> array('UINT', 0),
@@ -56,7 +57,7 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'drop_tables'    => array(
-	            $this->table_prefix . PREFIXES::TABLE . '_activitystats',
+	            $this->table_prefix . TABLES::SESSIONS,
         	),
 		);
 	}

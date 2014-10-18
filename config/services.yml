@@ -3,8 +3,18 @@ services:
         class: robertheim\activitystats\event\main_listener
         arguments:
             - @template
-            - @cache
             - @user
             - @dbal.conn
+            - @robertheim.activitystats.sessions_manager
+            - %core.table_prefix%
         tags:
             - { name: event.listener }
+    robertheim.activitystats.sessions_manager:
+        class: robertheim\activitystats\service\sessions_manager
+        arguments:
+            - @dbal.conn
+            - @user
+            - @config
+            - @cache
+            - %core.table_prefix%
+

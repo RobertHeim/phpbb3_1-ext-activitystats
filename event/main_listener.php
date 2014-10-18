@@ -30,56 +30,29 @@ class main_listener implements EventSubscriberInterface
 		);
 	}
 
-	const SORT_ASC = 0;
-
-	const SORT_USERNAME_ASC = 0;
-	const SORT_USERNAME_DESC = 1;
-	const SORT_LASTPAGE_ASC = 2;
-	const SORT_LASTPAGE_DESC = 3;
-	const SORT_USERID_ASC = 4;
-	const SORT_USERID_DESC = 5;
-
-	/**
-	* Would be too nice, if we could use a constant.
-	*/
-	static public function table($table_name = 'rh_activitystats')
-	{
-		global $table_prefix;
-		return $table_prefix . $table_name;
-	}
-
-	/* @var \phpbb\template\template */
 	protected $template;
-
-	/* @var \phpbb\cache\service */
-	protected $cache;
-
-	/* @var \phpbb\user */
 	protected $user;
-
-	/* @var \phpbb\db\driver\driver_interface */
 	protected $db;
+	protected $sessions_manager;
+	protected $table_prefix;
 
-	/**
-	 * Constructor
-	 *
-	 * @param \phpbb\template						$template	Template object
-	 * @param \phpbb\cache\service					$cache		Cache object
-	 * @param \phpbb\user							$user		User object
-	 * @param \phpbb\db\driver\driver_interface		$db			Database connection object
-	 */
-	public function __construct(\phpbb\template\template $template, \phpbb\cache\service $cache, \phpbb\user $user, \phpbb\db\driver\driver_interface $db)
+	public function __construct(\phpbb\template\template $template,
+		\phpbb\user $user,
+		\phpbb\db\driver\driver_interface $db,
+		\robertheim\activitystats\service\sessions_manager $sessions_manager,
+		$table_prefix)
 	{
 		$this->template = $template;
-		$this->cache = $cache;
 		$this->user = $user;
 		$this->db = $db;
+		$this->sessions_manager = $sessions_manager;
+		$this->table_prefix	= $table_prefix;
 	}
 
 	public function main($event)
 	{
 		global $config, $auth;
-		$this->update_session();
+		$this->sessions_manager->update_session();
 		if (!$config[PREFIXES::CONFIG.'_check_permissions'] || $auth->acl_get(PERMISSIONS::SEE_STATS))
 		{
 			$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
@@ -99,7 +72,7 @@ class main_listener implements EventSubscriberInterface
 				$timestamp = $midnight->getTimestamp();
 				// we prune when the last timezone on earth hits the new day.
 				// that means all where last visit was before UTC-10
-				$this->prune(time() - 36000); // -10*3600
+				$this->sessions_manager->prune(time() - 36000); // -10*3600
 			}
 			else
 			{
@@ -109,301 +82,19 @@ class main_listener implements EventSubscriberInterface
 				$timestamp -= (  60 * $config['robertheim_activitystats_del_time_m']);
 				$timestamp -=         $config['robertheim_activitystats_del_time_s'];
 				// prune everything before the period
-				$this->prune($timestamp);
+				$this->sessions_manager->prune($timestamp);
 			}
 
 			// after updating and pruning the sessions table check if a new record is reached
-			$this->check_record();
+			$this->sessions_manager->check_record();
 
 			// don't re-calculate the data within that time, but use the cached data from the last calculation.
 			$cachetime = $config['robertheim_activitystats_cache_time'];
 
 			// calculate the data to display or read it from the cache
-			$activity = $this->obtain_data($timestamp, $cachetime);
+			$activity = $this->sessions_manager->obtain_data($timestamp, $cachetime);
 			$this->display($activity);
 		}
-	}
-
-	/**
-	 * calculates the data which shall be displayed or reads it from the cache if within $cachetime.
-	 *
-	 * @param $timestamp the earliest timestamp for which data should be displayed
-	 * @param $cachetime timespan indicating how long the calculated data should be cached, before calculating it again
-	 * @return array the activity data based on the boards configuration
-	 */
-	private function obtain_data($timestamp, $cachetime)
-	{
-		global $config, $user, $db;
-
-		if (0 == $cachetime || ($activity = $this->cache->get('_robertheim_activitystats')) === false)
-		{
-			$activity = array();
-	
-			if ($config['robertheim_activitystats_disp_new_topics'])
-			{
-				// total new topics
-				$sql = 'SELECT COUNT(topic_id) AS new_topics
-						FROM ' . TOPICS_TABLE . '
-						WHERE topic_time >= ' . $timestamp;
-				$result = $this->db->sql_query($sql);
-				$activity['new_topics'] = $this->db->sql_fetchfield('new_topics');
-				$this->db->sql_freeresult($result);
-			}
-
-			if ($config['robertheim_activitystats_disp_new_posts'])
-			{
-				// total new posts
-				$sql = 'SELECT COUNT(post_id) AS new_posts
-						FROM ' . POSTS_TABLE . '
-						WHERE post_time >= ' . $timestamp;
-				$result = $this->db->sql_query($sql);
-				$activity['new_posts'] = $this->db->sql_fetchfield('new_posts');
-				$this->db->sql_freeresult($result);
-			}
-
-			if ($config['robertheim_activitystats_disp_new_users'])
-			{
-				// total new users (counts inactive users as well)
-				$sql = 'SELECT COUNT(user_id) AS new_users
-						FROM ' . USERS_TABLE . '
-						WHERE user_regdate >= ' . $timestamp;
-				$result = $this->db->sql_query($sql);
-				$activity['new_users'] = $this->db->sql_fetchfield('new_users');
-				$this->db->sql_freeresult($result);
-			}
-
-			switch ($config['robertheim_activitystats_sort_by'])
-			{
-				case self::SORT_USERNAME_ASC:
-				case self::SORT_USERNAME_DESC:
-					$sql_order_by = 'username_clean';
-				break;
-				case self::SORT_USERID_ASC:
-				case self::SORT_USERID_DESC:
-					$sql_order_by = 'user_id';
-				break;
-				case self::SORT_LASTPAGE_ASC:
-				case self::SORT_LASTPAGE_DESC:
-				default:
-					$sql_order_by = 'lastpage';
-				break;
-			}
-			$sql_ordering = (($config['robertheim_activitystats_sort_by'] % 2) == self::SORT_ASC) ? 'ASC' : 'DESC';
-
-			// count of total_users (eventually including ANONYMOUS several times)
-			$count_total = 0;
-			// count of different user types
-			$count_reg = $count_hidden = $count_bot = $count_guests = 0;
-
-			// holds all users-data without ANONYMOUS
-			$users_list = array();
-
-			// this array is used to prevent counting users (or bots etc) twice (while ANONYMOUS is counted several times)
-			$ids_user = array();
-
-			$sql = 'SELECT user_id, username, username_clean, user_colour, user_type, viewonline, lastpage, user_ip
-				FROM  ' . self::table() . "
-				WHERE lastpage >= " . ((int) $timestamp) . "
-				ORDER BY $sql_order_by $sql_ordering";
-			$result = $db->sql_query($sql);
-
-			while ($row = $db->sql_fetchrow($result))
-			{
-				if (!in_array($row['user_id'], $ids_user))
-				{
-					// dont put ANONYMOUS in ids_user, so we count all guests while users are only counted once
-					if ($row['user_id'] != ANONYMOUS)
-					{
-						$ids_user[] = $row['user_id'];
-					}
-
-					// check if we will display the username
-					$display_username = true;
-
-					if ($row['user_id'] == ANONYMOUS)
-					{
-						// guest
-						$display_username = false;
-						$count_guests++;
-						$count_total++;
-					}
-					else if ($row['user_type'] == USER_IGNORE)
-					{
-						// bot
-						$display_username = $config['robertheim_activitystats_disp_bots'];
-						if ($display_username)
-						{
-							$count_bot++;
-							$count_total++;
-						}
-					}
-					else if ($row['viewonline'] == 1)
-					{
-						// registered users that not hides his online status
-						$count_reg++;
-						$count_total++;
-					}
-					else
-					{
-						// hidden users
-						$display_username = $config['robertheim_activitystats_disp_hidden'];
-						if ($display_username)
-						{
-							$count_hidden++;
-							$count_total++;
-						}
-					}
-
-					if ($display_username)
-					{
-						// replace username with the printable username
-						$row['username'] = get_username_string((($row['user_type'] == USER_IGNORE) ? 'no_profile' : 'full'), $row['user_id'], $row['username'], $row['user_colour']);
-						$users_list[] = $row;
-					}
-				}
-			}
-
-			// set calculated counts to activity
-			$activity['count_total']	= $count_total;
-			$activity['count_reg']		= $count_reg;
-			$activity['count_hidden']	= $count_hidden;
-			$activity['count_bot']		= $count_bot;
-			$activity['count_guests']	= $count_guests;
-
-			$activity['users_list']		= $users_list;
-
-			if ($cachetime > 0)
-			{
-				$this->cache->put('_robertheim_activitystats', $activity, $cachetime);
-			}
-		}
-	
-		return $activity;
-	}
-
-	/**
-	* Checks if a new record is reached and if so stores the new record.
-	*/
-	private function check_record()
-	{
-		global $config;
-		// fetch count of users that have been online
-		$sql = 'SELECT DISTINCT COUNT(user_id) AS count_total
-			FROM  ' . self::table();
-		$result = $this->db->sql_query($sql);
-		$count_total = (int) $this->db->sql_fetchfield('count_total');
-		$this->db->sql_freeresult($result);
-		// Need to update the record?
-		if ($config['robertheim_activitystats_record_count'] < $count_total)
-		{
-			$config->set('robertheim_activitystats_record_count', $count_total, true);
-			$config->set('robertheim_activitystats_record_time', time(), true);
-		}
-	}
-
-	/**
-	* Update the users session in the table.
-	*/
-	private function update_session()
-	{
-		global $db, $user;
-
-		if ($user->data['user_id'] != ANONYMOUS)
-		{
-			// current user is logged in - however he might have opened another session as anonymous from the same ip.
-			// so we need to check user_id and (anonymous AND ip=user->ip)
-			$data = array(
-				'user_id'			=> $user->data['user_id'],
-				'user_ip'			=> $user->ip,
-				'username'			=> $user->data['username'],
-				'username_clean'	=> $user->data['username_clean'],
-				'user_colour'		=> $user->data['user_colour'],
-				'user_type'			=> $user->data['user_type'],
-				'viewonline'		=> $user->data['session_viewonline'],
-				'lastpage'			=> time(),
-			);
-
-			$db->sql_return_on_error(true);
-			$sql = 'UPDATE ' . self::table() . ' 
-				SET ' . $db->sql_build_array('UPDATE', $data) . '
-				WHERE user_id = ' . (int) $user->data['user_id'] . "
-					OR (user_ip = '" . $db->sql_escape($user->ip) . "'
-						AND user_id = " . ANONYMOUS . ')';
-			$result = $db->sql_query($sql);
-			$db->sql_return_on_error(false);
-
-			if ((bool) $result === false)
-			{
-				// database does not exist yet...
-				return;
-			}
-			$sql_affectedrows = (int) $db->sql_affectedrows();
-			if ($sql_affectedrows != 1)
-			{
-				if ($sql_affectedrows > 1)
-				{
-					// Found multiple matches, so we delete them and just add one
-					$sql = 'DELETE FROM ' . self::table() . '
-						WHERE user_id = ' . (int) $user->data['user_id'] . "
-							OR (user_ip = '" . $db->sql_escape($user->ip) . "'
-								AND user_id = " . ANONYMOUS . ')';
-					$db->sql_query($sql);
-					$db->sql_query('INSERT INTO ' . self::table() . ' ' . $db->sql_build_array('INSERT', $data));
-				}
-
-				if ($sql_affectedrows == 0)
-				{
-					// No entry updated. Either the user is not listed yet, or has opened two links in the same time
-					$sql = 'SELECT 1 as found
-						FROM ' . self::table() . '
-						WHERE user_id = ' . (int) $user->data['user_id'] . "
-							OR (user_ip = '" . $db->sql_escape($user->ip) . "'
-								AND user_id = " . ANONYMOUS . ')';
-					$result = $db->sql_query($sql);
-					$found = (int) $db->sql_fetchfield('found');
-					$db->sql_freeresult($result);
-					if (!$found)
-					{
-						// He wasn't listed.
-						$db->sql_query('INSERT INTO ' . self::table() . ' ' . $db->sql_build_array('INSERT', $data));
-					}
-				}
-			}
-		}
-		else
-		{
-			$db->sql_return_on_error(true);
-			$sql = 'SELECT user_id
-				FROM ' . self::table() . "
-				WHERE user_ip = '" . $db->sql_escape($user->ip) . "'";
-			$result = $db->sql_query_limit($sql, 1);
-			$db->sql_return_on_error(false);
-
-			if ((bool) $result === false)
-			{
-				// database does not exist yet...
-				return;
-			}
-
-			$user_logged = (int) $db->sql_fetchfield('user_id');
-			$db->sql_freeresult($result);
-
-			if (!$user_logged)
-			{
-				$data = array(
-					'user_id'			=> $user->data['user_id'],
-					'user_ip'			=> $user->ip,
-					'username'			=> $user->data['username'],
-					'username_clean'	=> $user->data['username_clean'],
-					'user_colour'		=> $user->data['user_colour'],
-					'user_type'			=> $user->data['user_type'],
-					'viewonline'		=> 1,
-					'lastpage'			=> time(),
-				);
-				$db->sql_query('INSERT INTO ' . self::table() . ' ' . $db->sql_build_array('INSERT', $data));
-			}
-		}
-		$db->sql_return_on_error(false);
 	}
 
 	/**
@@ -478,27 +169,6 @@ class main_listener implements EventSubscriberInterface
 			'ACTIVITY_STATS_EXP'		=> $this->get_explanation_string($config['robertheim_activitystats_mode']),
 			'ACTIVITY_STATS_RECORD'		=> $record_string,
 		));
-	}
-
-	/**
-	 * Deletes the users from the list, whose last visit is too old.
-	 *
-	 * @param $timestamp everything before timestamp will be deleted
-	 */
-	static public function prune($timestamp)
-	{
-		global $config, $db;
-
-		if ($config[PREFIXES::CONFIG.'_last_clean'] != $timestamp)
-		{
-			$sql = 'DELETE FROM ' . self::table() . '
-				WHERE lastpage < ' . $timestamp;
-			$db->sql_query($sql);
-
-			$config->set(PREFIXES::CONFIG.'_last_clean', $timestamp);
-		}
-		// Purging was not needed or done succesfully...
-		return true;
 	}
 
 	/**
