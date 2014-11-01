@@ -116,10 +116,13 @@ class sessions_manager
 		}
 		else
 		{
+			// current user is anonymous - however he might have opened another session as a user from the same ip.
+			// so we not only need to check (ip=user->ip) but (anonymous AND ip=user->ip)
 			$this->db->sql_return_on_error(true);
 			$sql = 'SELECT user_id
 				FROM ' . $this->table_prefix . TABLES::SESSIONS . "
-				WHERE user_ip = '" . $this->db->sql_escape($this->user->ip) . "'";
+				WHERE (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
+						AND user_id = " . ANONYMOUS . ')';
 			$result = $this->db->sql_query_limit($sql, 1);
 			$this->db->sql_return_on_error(false);
 
