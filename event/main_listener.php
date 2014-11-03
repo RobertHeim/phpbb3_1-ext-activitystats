@@ -254,7 +254,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		global $config, $user;
 
-		$total_new_string = array();
+		$total_news_string = array();
 		if ($config[PREFIXES::CONFIG . '_disp_new_topics'])
 		{
 			$total_news_string[] = $user->lang('ACTIVITY_STATS_NEW_TOPICS', $activity['new_topics']);
