@@ -78,9 +78,10 @@ class main_listener implements EventSubscriberInterface
 			{
 				// use UTC for period
 				$timestamp = time();
-				$timestamp -= (3600 * $config[PREFIXES::CONFIG . '_del_time_h']);
-				$timestamp -= (  60 * $config[PREFIXES::CONFIG . '_del_time_m']);
-				$timestamp -=         $config[PREFIXES::CONFIG . '_del_time_s'];
+				$timestamp -= (86400 * $config[PREFIXES::CONFIG . '_del_time_d']);
+				$timestamp -= ( 3600 * $config[PREFIXES::CONFIG . '_del_time_h']);
+				$timestamp -= (   60 * $config[PREFIXES::CONFIG . '_del_time_m']);
+				$timestamp -=          $config[PREFIXES::CONFIG . '_del_time_s'];
 				// prune everything before the period
 				$this->sessions_manager->prune($timestamp);
 			}
@@ -186,6 +187,7 @@ class main_listener implements EventSubscriberInterface
 		}
 		else
 		{
+			$d = (int) $config[PREFIXES::CONFIG . '_del_time_d'];
 			$h = (int) $config[PREFIXES::CONFIG . '_del_time_h'];
 			$m = (int) $config[PREFIXES::CONFIG . '_del_time_m'];
 			$s = (int) $config[PREFIXES::CONFIG . '_del_time_s'];
@@ -200,6 +202,7 @@ class main_listener implements EventSubscriberInterface
 				}
 			}
 			$explanation = $user->lang('ACTIVITY_STATS_EXP_TIME', $plural);
+			$explanation .= $user->lang('ACTIVITY_STATS_DAYS', $d);
 			$explanation .= $user->lang('ACTIVITY_STATS_HOURS', $h);
 			$explanation .= $user->lang('ACTIVITY_STATS_MINUTES', $m);
 			$explanation .= $user->lang('ACTIVITY_STATS_SECONDS', $s);

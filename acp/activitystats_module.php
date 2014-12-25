@@ -61,6 +61,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_disp_time_format', $request->variable($conf_prefix.'_disp_time_format', 'H:i'));
 			$config->set($conf_prefix.'_disp_ip', $request->variable($conf_prefix.'_disp_ip', 0));
 			$config->set($conf_prefix.'_mode', $request->variable($conf_prefix.'_mode', MODES::TODAY));
+			$config->set($conf_prefix.'_del_time_d', $request->variable($conf_prefix.'_del_time_d', 0));
 			$config->set($conf_prefix.'_del_time_h', $request->variable($conf_prefix.'_del_time_h', 0));
 			$config->set($conf_prefix.'_del_time_m', $request->variable($conf_prefix.'_del_time_m', 0));
 			$config->set($conf_prefix.'_del_time_s', $request->variable($conf_prefix.'_del_time_s', 0));
@@ -96,6 +97,7 @@ class activitystats_module
 			'ACTIVITY_STATS_DISP_TIME_FORMAT'	=> $config[$conf_prefix.'_disp_time_format'],
 			'ACTIVITY_STATS_DISP_IP'			=> $config[$conf_prefix.'_disp_ip'],
 			'ACTIVITY_STATS_MODE'				=> $config[$conf_prefix.'_mode'],
+			'ACTIVITY_STATS_DEL_TIME_D'			=> $config[$conf_prefix.'_del_time_d'],
 			'ACTIVITY_STATS_DEL_TIME_H'			=> $config[$conf_prefix.'_del_time_h'],
 			'ACTIVITY_STATS_DEL_TIME_M'			=> $config[$conf_prefix.'_del_time_m'],
 			'ACTIVITY_STATS_DEL_TIME_S'			=> $config[$conf_prefix.'_del_time_s'],

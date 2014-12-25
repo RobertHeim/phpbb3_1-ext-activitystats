@@ -35,6 +35,7 @@ class release_1_2_4 extends \phpbb\db\migration\migration
 	{
 		
 		return array(
+			array('config.add', array(PREFIXES::CONFIG.'_del_time_d', 0)),
 			// update version
 			array('config.update', array(PREFIXES::CONFIG.'_version', $this->version)),
 		);

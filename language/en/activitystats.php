@@ -60,6 +60,11 @@ $lang = array_merge($lang, array(
 		1		=> 'The following data is based on users active over the past ', // first non zero value is 1
 		2		=> 'The following data is based on users active over the past ', // first non zero value is >1
 	),
+	'ACTIVITY_STATS_DAYS'				=> array(
+		0		=> '',
+		1		=> '%%s %1$s day',
+		2		=> '%%s %1$s days',
+	),
 	'ACTIVITY_STATS_HOURS'				=> array(
 		0		=> '',
 		1		=> '%%s %1$s hour',
