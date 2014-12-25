@@ -68,16 +68,15 @@ class release_1_2_0 extends \phpbb\db\migration\migration
 	 * @param String $role the name of the role
 	 * @return true if the role exists, false otherwise.
 	 */
-	private function role_exists($role) {
-		$sql_array = array(
-			'SELECT'	=> '1 AS found',
-			'FROM'		=> array(ACL_ROLES_TABLE => 'r'),
-			'WHERE'		=> $this->db->sql_in_set('r.role_name', array($role)),
-		);
-		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query($sql);
-		$found = (int) $this->db->sql_fetchfield('found');
-		return ($found > 0);
+	protected function role_exists($role)
+	{
+		$sql = 'SELECT role_id
+        	FROM ' . ACL_ROLES_TABLE . '
+	        WHERE ' . $this->db->sql_in_set('role_name', $role);
+		$result = $this->db->sql_query_limit($sql, 1);
+		$role_id = $this->db->sql_fetchfield('role_id');
+		$this->db->sql_freeresult($result);
+		return $role_id > 0;
 	}
 	
 }
