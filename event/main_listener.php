@@ -192,15 +192,19 @@ class main_listener implements EventSubscriberInterface
 			$m = (int) $config[PREFIXES::CONFIG . '_del_time_m'];
 			$s = (int) $config[PREFIXES::CONFIG . '_del_time_s'];
 
-			$plural = $h;
-			if (0==$h)
-			{
-				$plural = $m;
-				if (0==$m)
-				{
-					$plural = $s;
-				}
-			}
+			$plural = $d;
+            if (0==$d)
+            {
+                $plural = $h;
+	    		if (0==$h)
+	    		{
+	    			$plural = $m;
+	    			if (0==$m)
+	    			{
+	    				$plural = $s;
+	    			}
+    			}
+            }
 			$explanation = $user->lang('ACTIVITY_STATS_EXP_TIME', $plural);
 			$explanation .= $user->lang('ACTIVITY_STATS_DAYS', $d);
 			$explanation .= $user->lang('ACTIVITY_STATS_HOURS', $h);
@@ -239,9 +243,10 @@ class main_listener implements EventSubscriberInterface
 		else
 		{
 			$period_start = $config[PREFIXES::CONFIG . '_record_time'];
-			$period_start -= (3600 * $config[PREFIXES::CONFIG . '_del_time_h']);
- 			$period_start -= (  60 * $config[PREFIXES::CONFIG . '_del_time_m']);
-			$period_start -=         $config[PREFIXES::CONFIG . '_del_time_s'];
+            $period_start -= (86400 * $config[PREFIXES::CONFIG . '_del_time_d']);
+			$period_start -= ( 3600 * $config[PREFIXES::CONFIG . '_del_time_h']);
+ 			$period_start -= (   60 * $config[PREFIXES::CONFIG . '_del_time_m']);
+			$period_start -=          $config[PREFIXES::CONFIG . '_del_time_s'];
 			return sprintf($user->lang['ACTIVITY_STATS_RECORD_PERIOD'],
 				$config[PREFIXES::CONFIG . '_record_count'],
 				$user->format_date($period_start, $format),
