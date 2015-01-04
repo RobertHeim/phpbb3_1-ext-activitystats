@@ -292,6 +292,7 @@ class sessions_manager
 					}
 				}
 			}
+            $this->db->sql_freeresult($result);
 
 			// set calculated counts to activity
 			$activity['count_total']	= $count_total;
