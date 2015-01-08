@@ -68,7 +68,7 @@ $lang = array_merge($lang, array(
 
 	'ACTIVITY_STATS_RECORD'					=> 'السجل ',
 	'ACTIVITY_STATS_RECORD_EXP'				=> 'إظهار وحفظ السجل',
-	'ACTIVITY_STATS_RECORD_TIMESTAMP'		=> 'تنسيق التاريخ لقائمة السجل ',
+	'ACTIVITY_STATS_RECORD_TIMEFORMAT'		=> 'تنسيق التاريخ لقائمة السجل ',
 	'ACTIVITY_STATS_RESET'					=> 'إعادة ضبط السجل ',
 	'ACTIVITY_STATS_RESET_EXP'				=> 'إعادة ضبط الوقت والعدد لسجل إحصائيات اليوم.',
 	'ACTIVITY_STATS_RESET_TRUE'				=> 'هل أنت متأكد من إعادة ضبط السجل ؟',
@@ -99,3 +99,4 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'ثواني',
 
 ));
+
