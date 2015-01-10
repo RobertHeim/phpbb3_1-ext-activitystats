@@ -61,6 +61,11 @@ $lang = array_merge($lang, array(
 		1		=> 'المعلومات التالية تعتمد على نشاط الأعضاء خلال الفترة الماضية ', // first non zero value is 1
 		2		=> 'المعلومات التالية تعتمد على نشاط الأعضاء خلال الفترة الماضية ', // first non zero value is >1
 	),
+	'ACTIVITY_STATS_DAYS'				=> array(
+		0		=> '',
+		1		=> '%%s %1$s يوم',
+		2		=> '%%s %1$s أيام',
+	),
 	'ACTIVITY_STATS_HOURS'				=> array(
 		0		=> '',
 		1		=> '%%s %1$s ساعة',
@@ -76,6 +81,7 @@ $lang = array_merge($lang, array(
 		1		=> '%%s %1$s ثانية',
 		2		=> '%%s %1$s ثواني',
 	),
-	'ACTIVITY_STATS_RECORD'				=> 'أكبر عدد للأعضاء المتصلين كان <strong>%1$s</strong> في %2$s',
-	'ACTIVITY_STATS_RECORD_TIME'		=> 'أكبر عدد للأعضاء المتصلين كان <strong>%1$s</strong> بين %2$s و %3$s',
+	'ACTIVITY_STATS_RECORD_DAY'			=> 'أكبر عدد للأعضاء المتصلين كان <strong>%1$s</strong> في %2$s',
+	'ACTIVITY_STATS_RECORD_PERIOD'		=> 'أكبر عدد للأعضاء المتصلين كان <strong>%1$s</strong> بين %2$s و %3$s',
 ));
+
