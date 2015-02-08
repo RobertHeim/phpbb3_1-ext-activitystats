@@ -9,11 +9,7 @@
 
 namespace robertheim\activitystats;
 
-/**
-* @ignore
-*/
-
-abstract class PREFIXES
+class tables
 {
-	const CONFIG = 'robertheim_activitystats';
+	const SESSIONS = 'rh_activitystats';
 }

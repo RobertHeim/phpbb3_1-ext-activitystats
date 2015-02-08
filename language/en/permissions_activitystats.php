@@ -36,9 +36,8 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-use robertheim\activitystats\PERMISSIONS;
+use robertheim\activitystats\permissions;
 
 $lang = array_merge($lang, array(
-	'ACL_'.mb_strtoupper(PERMISSIONS::SEE_STATS)	=> 'Can see activity stats',
+	'ACL_'.mb_strtoupper(permissions::SEE_STATS)	=> 'Can see activity stats',
 ));
-

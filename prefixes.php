@@ -13,7 +13,7 @@ namespace robertheim\activitystats;
 * @ignore
 */
 
-abstract class PERMISSIONS
+abstract class prefixes
 {
-	const SEE_STATS = 'u_rh_activitystats_see_stats';
+	const CONFIG = 'robertheim_activitystats';
 }

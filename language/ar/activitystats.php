@@ -10,12 +10,12 @@
 
 if (!defined('IN_PHPBB'))
 {
-    exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
 {
-    $lang = array();
+	$lang = array();
 }
 
 $lang = array_merge($lang, array(
@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_WORD'				=> ' و',
 	'ACTIVITY_STATS_EXP'				=> 'المعلومات التالية تعتمد على نشاط الأعضاء خلال الـ24 ساعة',
 	'ACTIVITY_STATS_EXP_TIME'			=> array(
-		0		=> 'المعلومات التالية تعتمد على نشاط الأعضاء في هذه اللحظة.', // h=m=s=0 
+		0		=> 'المعلومات التالية تعتمد على نشاط الأعضاء في هذه اللحظة.', // h=m=s=0
 		1		=> 'المعلومات التالية تعتمد على نشاط الأعضاء خلال الفترة الماضية ', // first non zero value is 1
 		2		=> 'المعلومات التالية تعتمد على نشاط الأعضاء خلال الفترة الماضية ', // first non zero value is >1
 	),

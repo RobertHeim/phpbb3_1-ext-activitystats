@@ -12,8 +12,8 @@ namespace robertheim\activitystats\acp;
 /**
 * @ignore
 */
-use robertheim\activitystats\MODES;
-use robertheim\activitystats\PREFIXES;
+use robertheim\activitystats\modes;
+use robertheim\activitystats\prefixes;
 
 class activitystats_module
 {
@@ -26,7 +26,7 @@ class activitystats_module
 		global $config, $request, $template, $user, $cache, $phpbb_container;
 
 		// shortcut
-		$conf_prefix = PREFIXES::CONFIG;
+		$conf_prefix = prefixes::CONFIG;
 
 		// common language file for DATEFORMAT_EXPLANATION
 		$user->add_lang('acp/board');
@@ -60,7 +60,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_disp_time', $request->variable($conf_prefix.'_disp_time', 0));
 			$config->set($conf_prefix.'_disp_time_format', $request->variable($conf_prefix.'_disp_time_format', 'H:i'));
 			$config->set($conf_prefix.'_disp_ip', $request->variable($conf_prefix.'_disp_ip', 0));
-			$config->set($conf_prefix.'_mode', $request->variable($conf_prefix.'_mode', MODES::TODAY));
+			$config->set($conf_prefix.'_mode', $request->variable($conf_prefix.'_mode', modes::TODAY));
 			$config->set($conf_prefix.'_del_time_d', $request->variable($conf_prefix.'_del_time_d', 0));
 			$config->set($conf_prefix.'_del_time_h', $request->variable($conf_prefix.'_del_time_h', 0));
 			$config->set($conf_prefix.'_del_time_m', $request->variable($conf_prefix.'_del_time_m', 0));

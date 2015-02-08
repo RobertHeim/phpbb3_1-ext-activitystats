@@ -13,8 +13,7 @@ namespace robertheim\activitystats;
 * @ignore
 */
 
-abstract class MODES
+abstract class permissions
 {
-	const TODAY = 1;
-	const PERIOD_OF_TIME = 0;
+	const SEE_STATS = 'u_rh_activitystats_see_stats';
 }

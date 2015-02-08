@@ -12,8 +12,8 @@ namespace robertheim\activitystats\service;
 /**
  * @ignore
  */
-use robertheim\activitystats\PREFIXES;
-use robertheim\activitystats\TABLES;
+use robertheim\activitystats\prefixes;
+use robertheim\activitystats\tables;
 
 /**
 * Handles all functionallity regarding the session table of activity stats.
@@ -68,7 +68,7 @@ class sessions_manager
 			);
 
 			$this->db->sql_return_on_error(true);
-			$sql = 'UPDATE ' . $this->table_prefix . TABLES::SESSIONS  . ' 
+			$sql = 'UPDATE ' . $this->table_prefix . tables::SESSIONS  . '
 				SET ' . $this->db->sql_build_array('UPDATE', $data) . '
 				WHERE user_id = ' . (int) $this->user->data['user_id'] . "
 					OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
@@ -87,19 +87,19 @@ class sessions_manager
 				if ($sql_affectedrows > 1)
 				{
 					// Found multiple matches, so we delete them and just add one
-					$sql = 'DELETE FROM ' . $this->table_prefix . TABLES::SESSIONS . '
+					$sql = 'DELETE FROM ' . $this->table_prefix . tables::SESSIONS . '
 						WHERE user_id = ' . (int) $this->user->data['user_id'] . "
 							OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
 								AND user_id = " . ANONYMOUS . ')';
 					$this->db->sql_query($sql);
-					$this->db->sql_query('INSERT INTO ' . $this->table_prefix . TABLES::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
+					$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 				}
 
 				if ($sql_affectedrows == 0)
 				{
 					// No entry updated. Either the user is not listed yet, or has opened two links in the same time
 					$sql = 'SELECT 1 as found
-						FROM ' . $this->table_prefix . TABLES::SESSIONS . '
+						FROM ' . $this->table_prefix . tables::SESSIONS . '
 						WHERE user_id = ' . (int) $this->user->data['user_id'] . "
 							OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
 								AND user_id = " . ANONYMOUS . ')';
@@ -109,7 +109,7 @@ class sessions_manager
 					if (!$found)
 					{
 						// He wasn't listed.
-						$this->db->sql_query('INSERT INTO ' . $this->table_prefix . TABLES::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
+						$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 					}
 				}
 			}
@@ -120,7 +120,7 @@ class sessions_manager
 			// so we not only need to check (ip=user->ip) but (anonymous AND ip=user->ip)
 			$this->db->sql_return_on_error(true);
 			$sql = 'SELECT user_id
-				FROM ' . $this->table_prefix . TABLES::SESSIONS . "
+				FROM ' . $this->table_prefix . tables::SESSIONS . "
 				WHERE (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
 						AND user_id = " . ANONYMOUS . ')';
 			$result = $this->db->sql_query_limit($sql, 1);
@@ -147,7 +147,7 @@ class sessions_manager
 					'viewonline'		=> 1,
 					'lastpage'			=> time(),
 				);
-				$this->db->sql_query('INSERT INTO ' . $this->table_prefix . TABLES::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
+				$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 			}
 		}
 		$this->db->sql_return_on_error(false);
@@ -160,13 +160,13 @@ class sessions_manager
 	 */
 	public function prune($timestamp)
 	{
-		if ($this->config[PREFIXES::CONFIG . '_last_clean'] != $timestamp)
+		if ($this->config[prefixes::CONFIG . '_last_clean'] != $timestamp)
 		{
-			$sql = 'DELETE FROM ' . $this->table_prefix . TABLES::SESSIONS . '
+			$sql = 'DELETE FROM ' . $this->table_prefix . tables::SESSIONS . '
 				WHERE lastpage < ' . $timestamp;
 			$this->db->sql_query($sql);
 
-			$this->config->set(PREFIXES::CONFIG . '_last_clean', $timestamp);
+			$this->config->set(prefixes::CONFIG . '_last_clean', $timestamp);
 		}
 		// Purging was not needed or done succesfully...
 		return true;
@@ -184,8 +184,8 @@ class sessions_manager
 		if (0 == $cachetime || ($activity = $this->cache->get('_robertheim_activitystats')) === false)
 		{
 			$activity = array();
-	
-			if ($this->config[PREFIXES::CONFIG . '_disp_new_topics'])
+
+			if ($this->config[prefixes::CONFIG . '_disp_new_topics'])
 			{
 				// total new topics
 				$sql = 'SELECT COUNT(topic_id) AS new_topics
@@ -196,7 +196,7 @@ class sessions_manager
 				$this->db->sql_freeresult($result);
 			}
 
-			if ($this->config[PREFIXES::CONFIG . '_disp_new_posts'])
+			if ($this->config[prefixes::CONFIG . '_disp_new_posts'])
 			{
 				// total new posts
 				$sql = 'SELECT COUNT(post_id) AS new_posts
@@ -207,7 +207,7 @@ class sessions_manager
 				$this->db->sql_freeresult($result);
 			}
 
-			if ($this->config[PREFIXES::CONFIG . '_disp_new_users'])
+			if ($this->config[prefixes::CONFIG . '_disp_new_users'])
 			{
 				// total new users (counts inactive users as well)
 				$sql = 'SELECT COUNT(user_id) AS new_users
@@ -218,7 +218,7 @@ class sessions_manager
 				$this->db->sql_freeresult($result);
 			}
 
-			switch ($this->config[PREFIXES::CONFIG . '_sort_by'])
+			switch ($this->config[prefixes::CONFIG . '_sort_by'])
 			{
 				case self::SORT_USERNAME_ASC:
 				case self::SORT_USERNAME_DESC:
@@ -234,7 +234,7 @@ class sessions_manager
 					$sql_order_by = 'lastpage';
 				break;
 			}
-			$sql_ordering = (($this->config[PREFIXES::CONFIG . '_sort_by'] % 2) == self::SORT_ASC) ? 'ASC' : 'DESC';
+			$sql_ordering = (($this->config[prefixes::CONFIG . '_sort_by'] % 2) == self::SORT_ASC) ? 'ASC' : 'DESC';
 
 			// count of total_users (eventually including ANONYMOUS several times)
 			$count_total = 0;
@@ -248,7 +248,7 @@ class sessions_manager
 			$ids_user = array();
 
 			$sql = 'SELECT user_id, username, username_clean, user_colour, user_type, viewonline, lastpage, user_ip
-				FROM  ' . $this->table_prefix . TABLES::SESSIONS . "
+				FROM  ' . $this->table_prefix . tables::SESSIONS . "
 				WHERE lastpage >= " . ((int) $timestamp) . "
 				ORDER BY $sql_order_by $sql_ordering";
 			$result = $this->db->sql_query($sql);
@@ -276,7 +276,7 @@ class sessions_manager
 					else if ($row['user_type'] == USER_IGNORE)
 					{
 						// bot
-						$display_username = $this->config[PREFIXES::CONFIG . '_disp_bots'];
+						$display_username = $this->config[prefixes::CONFIG . '_disp_bots'];
 						if ($display_username)
 						{
 							$count_bot++;
@@ -292,7 +292,7 @@ class sessions_manager
 					else
 					{
 						// hidden users
-						$display_username = $this->config[PREFIXES::CONFIG . '_disp_hidden'];
+						$display_username = $this->config[prefixes::CONFIG . '_disp_hidden'];
 						if ($display_username)
 						{
 							$count_hidden++;
@@ -323,7 +323,7 @@ class sessions_manager
 				$this->cache->put('_robertheim_activitystats', $activity, $cachetime);
 			}
 		}
-	
+
 		return $activity;
 	}
 
@@ -334,15 +334,15 @@ class sessions_manager
 	{
 		// fetch count of users that have been online
 		$sql = 'SELECT DISTINCT COUNT(user_id) AS count_total
-			FROM  ' . $this->table_prefix . TABLES::SESSIONS;
+			FROM  ' . $this->table_prefix . tables::SESSIONS;
 		$result = $this->db->sql_query($sql);
 		$count_total = (int) $this->db->sql_fetchfield('count_total');
 		$this->db->sql_freeresult($result);
 		// Need to update the record?
-		if ($this->config[PREFIXES::CONFIG . '_record_count'] < $count_total)
+		if ($this->config[prefixes::CONFIG . '_record_count'] < $count_total)
 		{
-			$this->config->set(PREFIXES::CONFIG . '_record_count', $count_total, true);
-			$this->config->set(PREFIXES::CONFIG . '_record_time', time(), true);
+			$this->config->set(prefixes::CONFIG . '_record_count', $count_total, true);
+			$this->config->set(prefixes::CONFIG . '_record_time', time(), true);
 		}
 	}
 }

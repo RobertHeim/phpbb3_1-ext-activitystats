@@ -9,7 +9,12 @@
 
 namespace robertheim\activitystats;
 
-class TABLES
+/**
+* @ignore
+*/
+
+abstract class modes
 {
-	const SESSIONS = 'rh_activitystats';
+	const TODAY = 1;
+	const PERIOD_OF_TIME = 0;
 }

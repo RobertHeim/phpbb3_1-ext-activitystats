@@ -12,8 +12,8 @@ namespace robertheim\activitystats\migrations;
 /**
 * @ignore
 */
-use robertheim\activitystats\MODES;
-use robertheim\activitystats\PREFIXES;
+use robertheim\activitystats\modes;
+use robertheim\activitystats\prefixes;
 
 class release_1_1_2 extends \phpbb\db\migration\migration
 {
@@ -21,7 +21,7 @@ class release_1_1_2 extends \phpbb\db\migration\migration
 
 	public function effectively_installed()
 	{
-		return version_compare($this->config[PREFIXES::CONFIG.'_version'], $this->version, '>=');
+		return version_compare($this->config[prefixes::CONFIG.'_version'], $this->version, '>=');
 	}
 
 	static public function depends_on()
@@ -34,8 +34,8 @@ class release_1_1_2 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array(PREFIXES::CONFIG.'_mode', MODES::TODAY)),
-			array('config.update', array(PREFIXES::CONFIG.'_version', $this->version)),
+			array('config.add', array(prefixes::CONFIG.'_mode', modes::TODAY)),
+			array('config.update', array(prefixes::CONFIG.'_version', $this->version)),
 		);
 	}
 }

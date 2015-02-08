@@ -9,12 +9,12 @@
 
 if (!defined('IN_PHPBB'))
 {
-    exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
 {
-    $lang = array();
+	$lang = array();
 }
 
 $lang = array_merge($lang, array(
@@ -56,7 +56,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_WORD'				=> ' and',
 	'ACTIVITY_STATS_EXP'				=> 'The following data is based on users active today',
 	'ACTIVITY_STATS_EXP_TIME'			=> array(
-		0		=> 'The following data is based on users active right now', // h=m=s=0 
+		0		=> 'The following data is based on users active right now', // h=m=s=0
 		1		=> 'The following data is based on users active over the past ', // first non zero value is 1
 		2		=> 'The following data is based on users active over the past ', // first non zero value is >1
 	),
@@ -83,4 +83,3 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_RECORD_DAY'			=> 'Most users ever online was <strong>%1$s</strong> on %2$s',
 	'ACTIVITY_STATS_RECORD_PERIOD'		=> 'Most users ever online was <strong>%1$s</strong> between %2$s and %3$s',
 ));
-
