@@ -67,20 +67,13 @@ class sessions_manager
 				'lastpage'			=> time(),
 			);
 
-			$this->db->sql_return_on_error(true);
 			$sql = 'UPDATE ' . $this->table_prefix . tables::SESSIONS  . '
 				SET ' . $this->db->sql_build_array('UPDATE', $data) . '
 				WHERE user_id = ' . (int) $this->user->data['user_id'] . "
 					OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
 						AND user_id = " . ANONYMOUS . ')';
 			$result = $this->db->sql_query($sql);
-			$this->db->sql_return_on_error(false);
 
-			if ((bool) $result === false)
-			{
-				// database does not exist yet...
-				return;
-			}
 			$sql_affectedrows = (int) $this->db->sql_affectedrows();
 			if ($sql_affectedrows != 1)
 			{
@@ -118,19 +111,11 @@ class sessions_manager
 		{
 			// current user is anonymous - however he might have opened another session as a user from the same ip.
 			// so we not only need to check (ip=user->ip) but (anonymous AND ip=user->ip)
-			$this->db->sql_return_on_error(true);
 			$sql = 'SELECT user_id
 				FROM ' . $this->table_prefix . tables::SESSIONS . "
 				WHERE (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
 						AND user_id = " . ANONYMOUS . ')';
 			$result = $this->db->sql_query_limit($sql, 1);
-			$this->db->sql_return_on_error(false);
-
-			if ((bool) $result === false)
-			{
-				// database does not exist yet...
-				return;
-			}
 
 			$this->user_logged = (int) $this->db->sql_fetchfield('user_id');
 			$this->db->sql_freeresult($result);
@@ -150,7 +135,6 @@ class sessions_manager
 				$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 			}
 		}
-		$this->db->sql_return_on_error(false);
 	}
 
 	/**
@@ -285,7 +269,7 @@ class sessions_manager
 					}
 					else if ($row['viewonline'] == 1)
 					{
-						// registered users that not hides his online status
+						// registered user that does not hide his online status
 						$count_reg++;
 						$count_total++;
 					}
@@ -308,6 +292,7 @@ class sessions_manager
 					}
 				}
 			}
+			$this->db->sql_freeresult($result);
 
 			// set calculated counts to activity
 			$activity['count_total']	= $count_total;
