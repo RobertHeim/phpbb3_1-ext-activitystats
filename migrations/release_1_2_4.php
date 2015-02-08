@@ -12,7 +12,6 @@ namespace robertheim\activitystats\migrations;
 /**
 * @ignore
 */
-use robertheim\activitystats\permissions;
 use robertheim\activitystats\prefixes;
 
 class release_1_2_4 extends \phpbb\db\migration\migration
