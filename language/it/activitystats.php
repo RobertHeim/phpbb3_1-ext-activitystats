@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 		1		=> '%%s %1$s secondo',
 		2		=> '%%s %1$s secondi',
 	),
-	'ACTIVITY_STATS_RECORD_DAY'			=> 'Record di utenti connessi &egrave; stato di <strong>%1$s</strong> il %2$s',
+	'ACTIVITY_STATS_RECORD_DAY'			=> 'Record di utenti connessi giornalmente &egrave; stato di <strong>%1$s</strong> il %2$s',
 	'ACTIVITY_STATS_RECORD_PERIOD'		=> 'Record di utenti connessi &egrave; stato di <strong>%1$s</strong> tra il %2$s ed il %3$s',
 ));
 
