@@ -42,4 +42,3 @@ use robertheim\activitystats\PERMISSIONS;
 $lang = array_merge($lang, array(
 	'ACL_'.mb_strtoupper(PERMISSIONS::SEE_STATS)	=> 'Peut consulter les statistiques d’activité',
 ));
-
