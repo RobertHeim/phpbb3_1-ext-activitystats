@@ -61,6 +61,11 @@ $lang = array_merge($lang, array(
 		1		=> 'Poniższe dane pokazują użytkowników aktywnych w ciągu ostatniej ', // first non zero value is 1
 		2		=> 'Poniższe dane pokazują użytkowników aktywnych w ciągu ostatnich ', // first non zero value is >1
 	),
+	'ACTIVITY_STATS_DAYS'				=> array(
+		0		=> '',
+		1		=> '%%s %1$s dnia',
+		2		=> '%%s %1$s dni',
+	),
 	'ACTIVITY_STATS_HOURS'				=> array(
 		0		=> '',
 		1		=> '%%s %1$s godziny',
