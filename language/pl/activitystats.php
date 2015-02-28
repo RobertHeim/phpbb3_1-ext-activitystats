@@ -79,4 +79,3 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_RECORD_DAY'			=> 'Najwięcej użytkowników (<strong>%1$s</strong>) było online dnia %2$s',
 	'ACTIVITY_STATS_RECORD_PERIOD'		=> 'Najwięcej użytkowników (<strong>%1$s</strong>) było online między %2$s a %3$s',
 ));
-
