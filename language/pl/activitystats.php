@@ -10,12 +10,12 @@
 
 if (!defined('IN_PHPBB'))
 {
-    exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
 {
-    $lang = array();
+	$lang = array();
 }
 
 $lang = array_merge($lang, array(
@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_WORD'				=> ' i',
 	'ACTIVITY_STATS_EXP'				=> 'Poniższe dane są oparte na użytkownikach aktywnych dzisiaj',
 	'ACTIVITY_STATS_EXP_TIME'			=> array(
-		0		=> 'Poniższe dane pokazują użytkowników aktywnych teraz', // h=m=s=0 
+		0		=> 'Poniższe dane pokazują użytkowników aktywnych teraz', // h=m=s=0
 		1		=> 'Poniższe dane pokazują użytkowników aktywnych w ciągu ostatniej ', // first non zero value is 1
 		2		=> 'Poniższe dane pokazują użytkowników aktywnych w ciągu ostatnich ', // first non zero value is >1
 	),
