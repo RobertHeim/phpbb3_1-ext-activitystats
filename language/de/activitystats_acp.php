@@ -98,4 +98,3 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'Sekunden',
 
 ));
-
