@@ -49,89 +49,83 @@ class sessions_manager
 
 	/**
 	* Update the users session in the table.
+	* @param int $timestamp the timestamp on that the update happens.
 	*/
-	public function update_session()
+	public function update_session($timestamp)
 	{
-		if ($this->user->data['user_id'] != ANONYMOUS)
+		$data = array(
+			'user_id'			=> $this->user->data['user_id'],
+			'user_ip'			=> $this->user->ip,
+			'username'			=> $this->user->data['username'],
+			'username_clean'	=> $this->user->data['username_clean'],
+			'user_colour'		=> $this->user->data['user_colour'],
+			'user_type'			=> $this->user->data['user_type'],
+			'viewonline'		=> 1,
+			'lastpage'			=> $timestamp,
+		);
+		if ($data['user_id'] != ANONYMOUS)
 		{
-			// current user is logged in - however he might have opened another session as anonymous from the same ip.
-			// so we need to check user_id and (anonymous AND ip=user->ip)
-			$data = array(
-				'user_id'			=> $this->user->data['user_id'],
-				'user_ip'			=> $this->user->ip,
-				'username'			=> $this->user->data['username'],
-				'username_clean'	=> $this->user->data['username_clean'],
-				'user_colour'		=> $this->user->data['user_colour'],
-				'user_type'			=> $this->user->data['user_type'],
-				'viewonline'		=> $this->user->data['session_viewonline'],
-				'lastpage'			=> time(),
-			);
+			// current user is logged in
+			$data['viewonline'] = $this->user->data['session_viewonline'];
 
-			$sql = 'UPDATE ' . $this->table_prefix . tables::SESSIONS  . '
-				SET ' . $this->db->sql_build_array('UPDATE', $data) . '
-				WHERE user_id = ' . (int) $this->user->data['user_id'] . "
-					OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
-						AND user_id = " . ANONYMOUS . ')';
+			$sql = 'SELECT id
+					FROM ' . $this->table_prefix . tables::SESSIONS . '
+					WHERE user_id = ' . (int) $this->user->data['user_id'];
 			$result = $this->db->sql_query($sql);
-
-			$sql_affectedrows = (int) $this->db->sql_affectedrows();
-			if ($sql_affectedrows != 1)
+			$session_id = (int) $this->db->sql_fetchfield('id');
+			$this->db->sql_freeresult($result);
+			if ($session_id > 0)
 			{
-				if ($sql_affectedrows > 1)
+				// update session
+				$sql = 'UPDATE ' . $this->table_prefix . tables::SESSIONS  . '
+					SET ' . $this->db->sql_build_array('UPDATE', $data) . '
+					WHERE id  = ' . $session_id;
+				$this->db->sql_query($sql);
+			}
+			else
+			{
+				// user is not yet registered as logged in user
+				// check if he has a session as anonymous
+				$sql = 'SELECT id
+						FROM ' . $this->table_prefix . tables::SESSIONS . '
+						WHERE (user_ip = \'' . $this->db->sql_escape($this->user->ip) . '\'
+								AND user_id = ' . ANONYMOUS . ')';
+				$result = $this->db->sql_query($sql);
+				$session_id = (int) $this->db->sql_fetchfield('id');
+				$this->db->sql_freeresult($result);
+				if ($session_id > 0)
 				{
-					// Found multiple matches, so we delete them and just add one
+					// delete it
 					$sql = 'DELETE FROM ' . $this->table_prefix . tables::SESSIONS . '
-						WHERE user_id = ' . (int) $this->user->data['user_id'] . "
-							OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
-								AND user_id = " . ANONYMOUS . ')';
+						WHERE id = ' . $session_id;
 					$this->db->sql_query($sql);
-					$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 				}
 
-				if ($sql_affectedrows == 0)
-				{
-					// No entry updated. Either the user is not listed yet, or has opened two links in the same time
-					$sql = 'SELECT 1 as found
-						FROM ' . $this->table_prefix . tables::SESSIONS . '
-						WHERE user_id = ' . (int) $this->user->data['user_id'] . "
-							OR (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
-								AND user_id = " . ANONYMOUS . ')';
-					$result = $this->db->sql_query($sql);
-					$found = (int) $this->db->sql_fetchfield('found');
-					$this->db->sql_freeresult($result);
-					if (!$found)
-					{
-						// He wasn't listed.
-						$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
-					}
-				}
+				// create new user session
+				$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 			}
 		}
 		else
 		{
-			// current user is anonymous - however he might have opened another session as a user from the same ip.
-			// so we not only need to check (ip=user->ip) but (anonymous AND ip=user->ip)
-			$sql = 'SELECT user_id
+			// current user is anonymous
+			$sql = 'SELECT id
 				FROM ' . $this->table_prefix . tables::SESSIONS . "
 				WHERE (user_ip = '" . $this->db->sql_escape($this->user->ip) . "'
 						AND user_id = " . ANONYMOUS . ')';
 			$result = $this->db->sql_query_limit($sql, 1);
 
-			$this->user_logged = (int) $this->db->sql_fetchfield('user_id');
+			$session_id = (int) $this->db->sql_fetchfield('id');
 			$this->db->sql_freeresult($result);
-
-			if (!$this->user_logged)
+			if ($session_id > 0)
 			{
-				$data = array(
-					'user_id'			=> $this->user->data['user_id'],
-					'user_ip'			=> $this->user->ip,
-					'username'			=> $this->user->data['username'],
-					'username_clean'	=> $this->user->data['username_clean'],
-					'user_colour'		=> $this->user->data['user_colour'],
-					'user_type'			=> $this->user->data['user_type'],
-					'viewonline'		=> 1,
-					'lastpage'			=> time(),
-				);
+				// update session
+				$sql = 'UPDATE ' . $this->table_prefix . tables::SESSIONS  . '
+					SET ' . $this->db->sql_build_array('UPDATE', $data) . '
+					WHERE id  = ' . $session_id;
+				$this->db->sql_query($sql);
+			}
+			else
+			{
 				$this->db->sql_query('INSERT INTO ' . $this->table_prefix . tables::SESSIONS . ' ' . $this->db->sql_build_array('INSERT', $data));
 			}
 		}
@@ -226,7 +220,7 @@ class sessions_manager
 			$count_reg = $count_hidden = $count_bot = $count_guests = 0;
 
 			// holds all users-data without ANONYMOUS
-			$this->users_list = array();
+			$users_list = array();
 
 			// this array is used to prevent counting users (or bots etc) twice (while ANONYMOUS is counted several times)
 			$ids_user = array();
@@ -288,7 +282,7 @@ class sessions_manager
 					{
 						// replace username with the printable username
 						$row['username'] = get_username_string((($row['user_type'] == USER_IGNORE) ? 'no_profile' : 'full'), $row['user_id'], $row['username'], $row['user_colour']);
-						$this->users_list[] = $row;
+						$users_list[] = $row;
 					}
 				}
 			}
@@ -300,8 +294,7 @@ class sessions_manager
 			$activity['count_hidden']	= $count_hidden;
 			$activity['count_bot']		= $count_bot;
 			$activity['count_guests']	= $count_guests;
-
-			$activity['users_list']		= $this->users_list;
+			$activity['users_list']		= $users_list;
 
 			if ($cachetime > 0)
 			{

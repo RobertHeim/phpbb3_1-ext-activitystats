@@ -52,7 +52,7 @@ class main_listener implements EventSubscriberInterface
 	public function main($event)
 	{
 		global $config, $auth;
-		$this->sessions_manager->update_session();
+		$this->sessions_manager->update_session(time());
 		if (!$config[prefixes::CONFIG.'_check_permissions'] || $auth->acl_get(permissions::SEE_STATS))
 		{
 			$this->user->add_lang_ext('robertheim/activitystats', 'activitystats');
