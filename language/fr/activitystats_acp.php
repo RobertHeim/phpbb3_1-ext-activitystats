@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ACTIVITY_STATS_INSTALLED'				=> 'Version installée: v%s',
+	'ACTIVITY_STATS_INSTALLED'				=> 'Version installée : v%s',
 
 	'ACTIVITY_STATS_TITLE'					=> 'Statistiques d’activité',
 	'ACTIVITY_STATS_DISP_SET'				=> 'Paramètres d’affichage',
@@ -74,24 +74,24 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_RESET_TRUE'				=> 'Si vous validez ce formulaire, le record sera réinitialisé.',
 
 
-	'ACTIVITY_STATS_SETTINGS_SAVED'			=> 'Configuration mise à jour correctement.',
+	'ACTIVITY_STATS_SETTINGS_SAVED'			=> 'Configuration mise à jour avec succès.',
 	'ACTIVITY_STATS_SORT_BY'				=> 'Trier les utilisateurs selon leur  :',
 	'ACTIVITY_STATS_SORT_BY_EXP'			=> 'Dans quel ordre les utilisateurs doivent-ils être affichés ?',
-	'ACTIVITY_STATS_SORT_BY_0'				=> 'Pseudo A -> Z',
-	'ACTIVITY_STATS_SORT_BY_1'				=> 'Pseudo Z -> A',
+	'ACTIVITY_STATS_SORT_BY_0'				=> 'Nom d’utilisateur A -> Z',
+	'ACTIVITY_STATS_SORT_BY_1'				=> 'Nom d’utilisateur Z -> A',
 	'ACTIVITY_STATS_SORT_BY_2'				=> 'Heure de visite croissante',
 	'ACTIVITY_STATS_SORT_BY_3'				=> 'Heure de visite décroissante',
-	'ACTIVITY_STATS_SORT_BY_4'				=> 'ID d’utilisateur croissante',
-	'ACTIVITY_STATS_SORT_BY_5'				=> 'ID d’utilisateur décroissante',
+	'ACTIVITY_STATS_SORT_BY_4'				=> 'ID d’utilisateur croissant',
+	'ACTIVITY_STATS_SORT_BY_5'				=> 'ID d’utilisateur décroissant',
 
-	'ACTIVITY_STATS_CACHE_TIME'				=> 'Durée du cache (secondes)',
+	'ACTIVITY_STATS_CACHE_TIME'				=> 'Durée du cache en secondes',
 	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Durée pendant laquelle les données ne sont pas recalculées (améliore les performances)',
 
 	'ACTIVITY_STATS_CHECK_PERMISSIONS'		=> 'Vérifier les permissions',
-	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'non= tout le monde peut consulter les statistiques d’activité (ne tient pas compte des permissions) ; oui = utilisation des permissions (ex. : autoriser aux utilisateurs enregistrés seulement : PCA -> permissions -> permissions globales -> permissions des groupes -> utilisateurs enregistrés -> permissions avancées -> divers -> « peut consulter les statistiques d’activité »)',
+	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'non= tout le monde peut consulter les statistiques d’activité (sans tenir compte des permissions) ; oui = utilisation des permissions (ex. : autoriser uniquement les utilisateurs enregistrés : PCA -> permissions -> permissions globales -> permissions des groupes -> utilisateurs enregistrés -> permissions avancées -> divers -> « peut consulter les statistiques d’activité »)',
 
-	'ACTIVITY_STATS_MODE'					=> 'Affichage des utilisteurs...',
-	'ACTIVITY_STATS_MODE_EXP'				=> 'Afficher les utilisateurs du jour (depuis minuit, selon le fuseau horaire du forum), ou selon la période de temps définie dans l’option suivante.',
+	'ACTIVITY_STATS_MODE'					=> 'Affichage des utilisateurs ...',
+	'ACTIVITY_STATS_MODE_EXP'				=> 'Afficher les utilisateurs d’aujourd’hui (depuis minuit, selon le fuseau horaire du forum), ou de la période de temps définie dans l’option suivante.',
 	'ACTIVITY_STATS_MODE_TODAY'				=> 'Aujourd’hui',
 	'ACTIVITY_STATS_MODE_PERIOD'			=> 'Période de temps',
 	'ACTIVITY_STATS_MODE_PERIOD_EXP'		=> 'mettez 0, si vous souhaitez afficher les utilisateurs des dernières 24 heures',
