@@ -87,7 +87,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Zeitraum in welcher die Daten nicht neu berechnet werden (verbessert die Leistung)',
 
 	'ACTIVITY_STATS_CHECK_PERMISSIONS'		=> 'Berechtigunen prüfen',
-	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'Nein = jeder sieht die Aktivitäts Statiktiken. (Ignoriere die Berechtigungseinstellungen); Ja = Verwende die vergebenen Berechtigungen z.B. Erlaube es nur für registierte Benutzer: ACP -> Berechtigungen -> Allgemeine Berechtigungen -> Gruppenrechte -> Registrierte Benutzer -> Erweiterte Berechtigungen -> Diverses -> "Kann Aktivitäts Statistiken sehen")',
+	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'Nein = jeder sieht die Aktivitäts Statistiken. (Ignoriere die Berechtigungseinstellungen); Ja = Verwende die vergebenen Berechtigungen z.B. Erlaube es nur für registierte Benutzer: ACP -> Berechtigungen -> Allgemeine Berechtigungen -> Gruppenrechte -> Registrierte Benutzer -> Erweiterte Berechtigungen -> Diverses -> "Kann Aktivitäts Statistiken sehen")',
 
 	'ACTIVITY_STATS_MODE'					=> 'Anzeige Benutzer von ...',
 	'ACTIVITY_STATS_MODE_EXP'				=> 'Anzeige Benutzer von heute (seit 00:00 Board Zeitzone), oder von einem Zeitraum definiert in folgender Einstellung:',

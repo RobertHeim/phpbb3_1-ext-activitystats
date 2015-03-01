@@ -19,7 +19,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 // for the normal sites
-	'ACTIVITY_STATS'					=> 'Aktivität Statistiken',
+	'ACTIVITY_STATS'					=> 'Aktivitäts Statistiken',
 	'ACTIVITY_STATS_LATEST1'			=> 'zuletzt um',
 	'ACTIVITY_STATS_LATEST2'			=> ' Uhr',//used for parts like o'clock in the timedisplay (last at vw:xy "o'clock")
 
@@ -59,6 +59,11 @@ $lang = array_merge($lang, array(
 		0		=> 'Die folgenden Daten basieren auf den Benutzer Aktivitäten gerade jetzt', // h=m=s=0
 		1		=> 'Die folgenden Daten basieren auf den Benutzer Aktivitäten seit ', // first non zero value is 1
 		2		=> 'Die folgenden Daten basieren auf den Benutzer Aktivitäten seit ', // first non zero value is >1
+	),
+	'ACTIVITY_STATS_DAYS'				=> array(
+		0		=> '',
+		1		=> '%%s %1$s Tag',
+		2		=> '%%s %1$s Tage',
 	),
 	'ACTIVITY_STATS_HOURS'				=> array(
 		0		=> '',
