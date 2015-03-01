@@ -70,7 +70,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_RECORD_TIMEFORMAT'		=> 'Dateformat for the record',
 	'ACTIVITY_STATS_RESET'					=> 'Reset record',
 	'ACTIVITY_STATS_RESET_EXP'				=> 'Resets the time and counter of the Activity Stats record.',
-	'ACTIVITY_STATS_RESET_TRUE'				=> 'If you submit this form,\nthe record will be reseted.',
+	'ACTIVITY_STATS_RESET_TRUE'				=> 'If you submit this form, the record will be reseted.',
 
 
 	'ACTIVITY_STATS_SETTINGS_SAVED'			=> 'Configuration updated successfully.',

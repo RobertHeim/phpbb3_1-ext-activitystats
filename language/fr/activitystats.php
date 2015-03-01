@@ -21,7 +21,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 // for the normal sites
 	'ACTIVITY_STATS'					=> 'Statistiques d’activité',
-	'ACTIVITY_STATS_LATEST1'			=> 'dernier le',
+	'ACTIVITY_STATS_LATEST1'			=> 'dernière connexion le',
 	'ACTIVITY_STATS_LATEST2'			=> '',//used for parts like o'clock in the timedisplay (last at vw:xy "o'clock")
 
 	'ACTIVITY_STATS_NEW_TOPICS'			=> 'Nouveau(x) sujet(s) : <strong>%d</strong>',
@@ -55,7 +55,7 @@ $lang = array_merge($lang, array(
 	),
 
 	'ACTIVITY_STATS_WORD'				=> ' et',
-	'ACTIVITY_STATS_EXP'				=> 'Les données suivantes sont basées sur les utilisateurs actifs aujourd’hui',
+	'ACTIVITY_STATS_EXP'				=> 'Les données suivantes sont basées sur les utilisateurs actifs d’aujourd’hui',
 	'ACTIVITY_STATS_EXP_TIME'			=> array(
 		0		=> 'Les données suivantes sont basées sur les utilisateurs actifs à l’instant', // d=h=m=s=0
 		1		=> 'Les données suivantes sont basées sur les utilisateurs actifs durant la dernière ', // first non zero value is 1
