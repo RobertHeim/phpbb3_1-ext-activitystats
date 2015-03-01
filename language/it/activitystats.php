@@ -38,9 +38,9 @@ $lang = array_merge($lang, array(
 		2		=> '%d registrati',
 	),
 	'ACTIVITY_STATS_HIDDEN'				=> array(
-		0		=> '0 hidden',
-		1		=> '%d hidden',
-		2		=> '%d hidden',
+		0		=> '0 nascosti',
+		1		=> '%d nascosto',
+		2		=> '%d nascosti',
 	),
 	'ACTIVITY_STATS_BOTS'				=> array(
 		0		=> '0 bots',
