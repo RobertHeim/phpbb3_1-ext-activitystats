@@ -47,27 +47,27 @@ $lang = array_merge($lang, array(
 
 	// acp form
 	'ACTIVITY_STATS_DISP_NEW_TOPICS'		=> 'Afficher les nouveaux sujets ',
-	'ACTIVITY_STATS_DISP_NEW_TOPICS_EXP'	=> 'Affiche le nombre de nouveaux sujets',
+	'ACTIVITY_STATS_DISP_NEW_TOPICS_EXP'	=> 'Affiche le nombre de nouveaux sujets.',
 	'ACTIVITY_STATS_DISP_NEW_POSTS'			=> 'Afficher les nouveaux messages ',
-	'ACTIVITY_STATS_DISP_NEW_POSTS_EXP'		=> 'Affiche les nouveaux messages',
+	'ACTIVITY_STATS_DISP_NEW_POSTS_EXP'		=> 'Affiche les nouveaux messages.',
 	'ACTIVITY_STATS_DISP_NEW_USERS'			=> 'Afficher les nouveaux membres ',
-	'ACTIVITY_STATS_DISP_NEW_USERS_EXP'		=> 'Affiche le nombre de nouveaux membres',
+	'ACTIVITY_STATS_DISP_NEW_USERS_EXP'		=> 'Affiche le nombre de nouveaux membres.',
 
 	'ACTIVITY_STATS_DISP_BOTS'				=> 'Afficher les robots ',
 	'ACTIVITY_STATS_DISP_BOTS_EXP'			=> 'Certains utilisateurs pourraient s’interroger sur ce que sont les robots et en avoir peur.',
 	'ACTIVITY_STATS_DISP_GUESTS'			=> 'Afficher les visiteurs ',
 	'ACTIVITY_STATS_DISP_GUESTS_EXP'		=> 'Afficher les visiteurs dans le compteur ?',
 	'ACTIVITY_STATS_DISP_HIDDEN'			=> 'Afficher les membres masqués ',
-	'ACTIVITY_STATS_DISP_HIDDEN_EXP'		=> 'Les membres masqués doivent-ils être affichés dans la liste ? (permissions nécessaires)',
+	'ACTIVITY_STATS_DISP_HIDDEN_EXP'		=> 'Les membres masqués doivent-ils être affichés dans la liste ? (des permissions sont nécessaires).',
 	'ACTIVITY_STATS_DISP_TIME'				=> 'Afficher l’heure ',
 	'ACTIVITY_STATS_DISP_TIME_EXP'			=> 'Visible par tous les utilisateurs ou par personne. Pas de fonction spéciale pour les administrateurs.',
 	'ACTIVITY_STATS_DISP_TIME_FORMAT'		=> 'Format de la date ',
 	'ACTIVITY_STATS_DISP_HOVER'				=> 'Afficher au survol de la souris',
 	'ACTIVITY_STATS_DISP_IP'				=> 'Afficher l’IP de l’utilisateur ',
-	'ACTIVITY_STATS_DISP_IP_EXP'			=> 'Uniquement pour les membres avec des permissions d’administration, tout comme sur la page viewonline.php',
+	'ACTIVITY_STATS_DISP_IP_EXP'			=> 'Uniquement pour les membres avec des permissions d’administration, tout comme sur la page viewonline.php.',
 
 	'ACTIVITY_STATS_RECORD'					=> 'Record ',
-	'ACTIVITY_STATS_RECORD_EXP'				=> 'Afficher et enregistrer le record',
+	'ACTIVITY_STATS_RECORD_EXP'				=> 'Afficher et enregistrer le record.',
 	'ACTIVITY_STATS_RECORD_TIMEFORMAT'		=> 'Format de la date pour le record ',
 	'ACTIVITY_STATS_RESET'					=> 'Réinitialiser le record ',
 	'ACTIVITY_STATS_RESET_EXP'				=> 'Réinitialise l’heure et le compteur du record des statistiques d’activité.',
@@ -85,10 +85,10 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_SORT_BY_5'				=> 'ID d’utilisateur décroissant',
 
 	'ACTIVITY_STATS_CACHE_TIME'				=> 'Durée du cache en secondes ',
-	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Durée pendant laquelle les données ne sont pas recalculées (améliore les performances)',
+	'ACTIVITY_STATS_CACHE_TIME_EXP'			=> 'Durée pendant laquelle les données ne sont pas recalculées (améliore les performances).',
 
 	'ACTIVITY_STATS_CHECK_PERMISSIONS'		=> 'Vérifier les permissions ',
-	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'non= tout le monde peut consulter les statistiques d’activité (sans tenir compte des permissions) ; oui = utilisation des permissions (ex. : autoriser uniquement les utilisateurs enregistrés : PCA -> permissions -> permissions globales -> permissions des groupes -> utilisateurs enregistrés -> permissions avancées -> divers -> « peut consulter les statistiques d’activité »)',
+	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'Non = tout le monde peut consulter les statistiques d’activité (sans tenir compte des permissions); Oui = utilisation des permissions (ex. : autoriser uniquement les utilisateurs enregistrés : PCA -> permissions -> permissions globales -> permissions des groupes -> utilisateurs enregistrés -> permissions avancées -> divers -> « peut consulter les statistiques d’activité »).',
 
 	'ACTIVITY_STATS_MODE'					=> 'Affichage des utilisateurs ',
 	'ACTIVITY_STATS_MODE_EXP'				=> 'Afficher les utilisateurs d’aujourd’hui (depuis minuit, selon le fuseau horaire du forum), ou de la période de temps définie dans l’option suivante.',
