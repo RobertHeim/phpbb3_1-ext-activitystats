@@ -56,7 +56,7 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_WORD'				=> ' and',
 	'ACTIVITY_STATS_EXP'				=> 'I seguenti dati si basano sugli utenti attivi oggi',
 	'ACTIVITY_STATS_EXP_TIME'			=> array(
-		0		=> 'The following data is based on users active right now', // h=m=s=0 
+		0		=> 'The following data is based on users active right now', // h=m=s=0
 		1		=> 'The following data is based on users active over the past ', // first non zero value is 1
 		2		=> 'The following data is based on users active over the past ', // first non zero value is >1
 	),
