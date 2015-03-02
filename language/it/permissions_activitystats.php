@@ -1,10 +1,9 @@
 <?php
 /**
 *
-* Reputation System extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
+* @package phpBB Extension - Activity Stats
+* @copyright (c) 2014 Robet Heim
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
 
@@ -37,8 +36,8 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-use robertheim\activitystats\permissions;
+use robertheim\activitystats\PERMISSIONS;
 
 $lang = array_merge($lang, array(
-	'ACL_'.utf8_strtoupper(permissions::SEE_STATS)	=> 'Puede ver las estadísticas de actividad',
+	'ACL_'.utf8_strtoupper(PERMISSIONS::SEE_STATS)	=> 'Can see activity stats',
 ));

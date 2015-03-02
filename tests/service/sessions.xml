@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <table name="phpbb_rh_activitystats">
+        <column>id</column>
+        <column>user_id</column>
+        <column>username</column>
+        <column>username_clean</column>
+        <column>user_colour</column>
+        <column>user_ip</column>
+        <column>user_type</column>
+        <column>viewonline</column>
+        <column>lastpage</column>
+	</table>
+</dataset>

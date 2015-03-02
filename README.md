@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/RobertHeim/phpbb3_1-ext-activitystats.svg?branch=master)](https://travis-ci.org/RobertHeim/phpbb3_1-ext-activitystats)
+
 phpbb31-ext-activitystats
 =========================
 
