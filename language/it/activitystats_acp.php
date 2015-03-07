@@ -89,12 +89,12 @@ $lang = array_merge($lang, array(
 	'ACTIVITY_STATS_CHECK_PERMISSIONS'		=> 'Check permissions',
 	'ACTIVITY_STATS_CHECK_PERMISSIONS_EXP'	=> 'no=everybody should see the activity stats (ignore permission-settings); yes=use configured permissions (e.g. allow it for registered users only: ACP->permissions->global permissions -> group permissions -> registered users -> Advanced permissions -> Misc -> "Can see activity stats")',
 
-	'ACTIVITY_STATS_MODE'					=> 'Displaying users of ...',
-	'ACTIVITY_STATS_MODE_EXP'				=> 'Displaying users of today (since 00:00 board-timezone), or of the period set in the next option.',
-	'ACTIVITY_STATS_MODE_TODAY'				=> 'Today',
-	'ACTIVITY_STATS_MODE_PERIOD'			=> 'Period of time',
-	'ACTIVITY_STATS_MODE_PERIOD_EXP'		=> 'type 0, if you want to display the users of the last 24h',
-	'ACTIVITY_STATS_MODE_PERIOD_EXP2'		=> 'disabled, if you have choosen "today"',
-	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'seconds',
+	'ACTIVITY_STATS_MODE'					=> 'Visualizza gli utenti di ...',
+	'ACTIVITY_STATS_MODE_EXP'				=> 'Visualizza gli utenti di oggi (dalle 00:00 dell\'orario del server), o del periodo impostato nella successivo parametro.',
+	'ACTIVITY_STATS_MODE_TODAY'				=> 'Oggi',
+	'ACTIVITY_STATS_MODE_PERIOD'			=> 'Periodo di tempo',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP'		=> 'type 0, se vuoi visualizzare gli utenti delle ultime 24 ore',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP2'		=> 'disattivato, se si &egrave; scelto "oggi"',
+	'ACTIVITY_STATS_MODE_PERIOD_EXP3'		=> 'secondi',
 
 ));
