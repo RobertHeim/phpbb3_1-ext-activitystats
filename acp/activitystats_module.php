@@ -58,7 +58,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_disp_guests', $request->variable($conf_prefix.'_disp_guests', 0));
 			$config->set($conf_prefix.'_disp_hidden', $request->variable($conf_prefix.'_disp_hidden', 0));
 			$config->set($conf_prefix.'_disp_time', $request->variable($conf_prefix.'_disp_time', 0));
-			$config->set($conf_prefix.'_disp_time_format', $request->variable($conf_prefix.'_disp_time_format', 'H:i'));
+			$config->set($conf_prefix.'_disp_time_format', utf8_normalize_nfc($request->variable($conf_prefix.'_disp_time_format', 'H:i', true)));
 			$config->set($conf_prefix.'_disp_ip', $request->variable($conf_prefix.'_disp_ip', 0));
 			$config->set($conf_prefix.'_mode', $request->variable($conf_prefix.'_mode', modes::TODAY));
 			$config->set($conf_prefix.'_del_time_d', $request->variable($conf_prefix.'_del_time_d', 0));
@@ -69,7 +69,7 @@ class activitystats_module
 			$config->set($conf_prefix.'_check_permissions', $request->variable($conf_prefix.'_check_permissions', 0));
 			$config->set($conf_prefix.'_cache_time', $request->variable($conf_prefix.'_cache_time', 600));
 			$config->set($conf_prefix.'_record', $request->variable($conf_prefix.'_record', 0));
-			$config->set($conf_prefix.'_record_timeformat', $request->variable($conf_prefix.'_record_timeformat', 'D j. M Y'));
+			$config->set($conf_prefix.'_record_timeformat', utf8_normalize_nfc($request->variable($conf_prefix.'_record_timeformat', 'D j. M Y', true)));
 			if ($request->variable($conf_prefix.'_reset', 0) > 0)
 			{
 				$reset_time = time();
