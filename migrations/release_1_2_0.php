@@ -43,13 +43,16 @@ class release_1_2_0 extends \phpbb\db\migration\migration
 		$re[] = array('permission.add', array($p));
 
 		// Set permissions for the board roles
-		if ($this->role_exists('ROLE_ADMIN_FULL')) {
+		if ($this->role_exists('ROLE_ADMIN_FULL'))
+		{
 			$re[] = array('permission.permission_set', array('ROLE_ADMIN_FULL', $p));
 		}
-		if ($this->role_exists('ROLE_USER_FULL')) {
+		if ($this->role_exists('ROLE_USER_FULL'))
+		{
 			$re[] = array('permission.permission_set', array('ROLE_USER_FULL', $p));
 		}
-		if ($this->role_exists('ROLE_USER_STANDARD')) {
+		if ($this->role_exists('ROLE_USER_STANDARD'))
+		{
 			$re[] = array('permission.permission_set', array('ROLE_USER_STANDARD', $p));
 		}
 
