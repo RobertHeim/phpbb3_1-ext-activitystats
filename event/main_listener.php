@@ -71,8 +71,8 @@ class main_listener implements EventSubscriberInterface
 				$midnight->setTime(0,0,0);
 				$timestamp = $midnight->getTimestamp();
 				// we prune when the last timezone on earth hits the new day.
-				// that means all where last visit was before UTC-10
-				$this->sessions_manager->prune(time() - 36000); // -10*3600
+				// that means all where last visit was before UTC-12
+				$this->sessions_manager->prune(time() - 43200); // -60*60*12
 			}
 			else
 			{
