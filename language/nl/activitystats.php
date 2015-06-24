@@ -7,7 +7,6 @@
 *
 * Dutch translation by Rembert Oldenboom (http://www.floating-point.nl/ - v.1.0.0 - 2015-06-14
 */
-*/
 
 if (!defined('IN_PHPBB'))
 {
