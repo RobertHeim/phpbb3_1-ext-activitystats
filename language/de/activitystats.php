@@ -80,6 +80,6 @@ $lang = array_merge($lang, array(
 		1		=> '%%s %1$s Sekunde',
 		2		=> '%%s %1$s Sekunden',
 	),
-	'ACTIVITY_STATS_RECORD_DAY'			=> 'Der bisherige Rekord von <strong>%1$s</strong> Besuchern lag am %2$s',
+	'ACTIVITY_STATS_RECORD_DAY'			=> 'Der bisherige Rekord von <strong>%1$s</strong> Besuchern war am %2$s',
 	'ACTIVITY_STATS_RECORD_PERIOD'		=> 'Der absolute Besucher Rekord liegt bei <strong>%1$s</strong> zwischen %2$s und %3$s',
 ));
