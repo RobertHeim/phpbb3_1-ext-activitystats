@@ -2,6 +2,8 @@ services:
     robertheim.activitystats.listener:
         class: robertheim\activitystats\event\main_listener
         arguments:
+            - @config
+            - @auth
             - @template
             - @user
             - @dbal.conn
