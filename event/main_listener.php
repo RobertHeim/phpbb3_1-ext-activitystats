@@ -136,7 +136,7 @@ class main_listener implements EventSubscriberInterface
 		$users_str = '';
 		if (sizeof($users_list) > 0)
 		{
-			$users_str = join($user->lang['COMMA_SEPARATOR'], $users_list);
+			$users_str = join($this->user->lang['COMMA_SEPARATOR'], $users_list);
 		}
 		else
 		{
@@ -251,9 +251,23 @@ class main_listener implements EventSubscriberInterface
 
 		if (modes::TODAY == $this->config[prefixes::CONFIG . '_mode'])
 		{
+			// the record is calculated based on the boards timezone, because this
+			// is a global value to the board itself and not to a specific user
+			// its stored as UTC timestamp
+			// and we display it in the boards timezone (and give a zimezone hint in the shown string)
+			// it is not displayed in the users timezone, because it does not make any
+			// sense to calculate it in another timezone than it is displayed.
+
+			$utc_timezone = $this->sessions_manager->get_utc_timezone();
+			$board_timezone = $this->sessions_manager->get_board_timezone();
+
+			$record_time_utc = $this->config[prefixes::CONFIG . '_record_time'];
+			$datetime = new \phpbb\datetime($this->user, "@$record_time_utc", $utc_timezone);
+			$datetime->setTimezone($board_timezone);
+
 			return sprintf($this->user->lang['ACTIVITY_STATS_RECORD_DAY'],
 				$this->config[prefixes::CONFIG . '_record_count'],
-				$this->user->format_date($this->config[prefixes::CONFIG . '_record_time'], $format)) . '<br />';
+				$datetime->format($format)) . ' (' . $board_timezone->getName() . ')' . '<br />';
 		}
 		else
 		{

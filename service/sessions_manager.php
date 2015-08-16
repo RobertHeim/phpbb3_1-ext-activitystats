@@ -14,6 +14,7 @@ namespace robertheim\activitystats\service;
  */
 use robertheim\activitystats\prefixes;
 use robertheim\activitystats\tables;
+use robertheim\activitystats\modes;
 
 /**
 * Handles all functionallity regarding the session table of activity stats.
@@ -305,14 +306,55 @@ class sessions_manager
 		return $activity;
 	}
 
+	public function get_board_timezone()
+	{
+		// local static variables work like static variables of
+		// the class, but with differnt scope
+		static $board_timezone;
+		if (!isset($board_timezone))
+		{
+			$board_timezone = new \DateTimeZone($this->config['board_timezone']);
+		}
+		return $board_timezone;
+	}
+
+	public function get_utc_timezone()
+	{
+		// local static variables work like static variables of
+		// the class, but with differnt scope
+		static $utc;
+		if (!isset($utc))
+		{
+			$utc = new \DateTimeZone('UTC');
+		}
+		return $utc;
+	}
+
 	/**
 	* Checks if a new record is reached and if so stores the new record.
 	*/
 	public function check_record()
 	{
-		// fetch count of users that have been online
+		$where = '';
+		if (modes::TODAY == $this->config[prefixes::CONFIG . '_mode'])
+		{
+			// the record is calculated based on the boards timezone, because this
+			// is a global value to the board itself and not to a specific user
+			// its stored as UTC timestamp
+			// and we display it in the boards timezone
+			// it is not displayed in the users timezone, because it does not make any
+			// sense to calculate it in another timezone than it is displayed.
+
+			// fetch count of users that have been online today (board timezone)
+			// where lastpage >= midnight;
+			$now = new \phpbb\datetime($this->user, 'now', $this->get_board_timezone());
+			$midnight = clone $now;
+			$midnight->setTime(0,0,0);
+			$where = ' WHERE lastpage >= ' . $midnight->getTimestamp();
+		}
 		$sql = 'SELECT DISTINCT COUNT(user_id) AS count_total
-			FROM  ' . $this->table_prefix . tables::SESSIONS;
+			FROM  ' . $this->table_prefix . tables::SESSIONS
+			. $where;
 		$result = $this->db->sql_query($sql);
 		$count_total = (int) $this->db->sql_fetchfield('count_total');
 		$this->db->sql_freeresult($result);
