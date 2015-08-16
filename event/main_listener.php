@@ -242,7 +242,7 @@ class main_listener implements EventSubscriberInterface
 
 	/**
 	* Returns the Record string for the online list:
-	* Demo:	Most users ever online was 1 on Mon 7. Sep 2009
+	* Demo:	Most users ever online was 1 on Mon 7. Sep 2009 (GMT+1)
 	*		Most users ever online was 1 between Mon 7. Sep 2009 and Tue 8. Sep 2009
 	*/
 	private function get_record_string()
@@ -265,9 +265,13 @@ class main_listener implements EventSubscriberInterface
 			$datetime = new \phpbb\datetime($this->user, "@$record_time_utc", $utc_timezone);
 			$datetime->setTimezone($board_timezone);
 
+			// calculate gmt offset
+			$offset = $board_timezone->getOffset( $datetime ) / 3600;
+			$gmt_offset = 'GMT' . ($offset < 0 ? $offset : '+' . $offset);
+
 			return sprintf($this->user->lang['ACTIVITY_STATS_RECORD_DAY'],
 				$this->config[prefixes::CONFIG . '_record_count'],
-				$datetime->format($format)) . ' (' . $board_timezone->getName() . ')' . '<br />';
+				$datetime->format($format)) . ' (' . $gmt_offset . ')' . '<br />';
 		}
 		else
 		{
